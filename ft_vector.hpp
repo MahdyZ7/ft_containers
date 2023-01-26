@@ -17,6 +17,7 @@ namespace ft
 		
 	public:
 		// constructors;
+		vector();
 		vector (const Allocator& alloc);
 		vector (typename std::allocator_traits<Allocator>::size_type n, const T& val,
 			const Allocator& alloc);
@@ -24,14 +25,25 @@ namespace ft
 			InputIterator last, const Allocator& alloc);
 		vector (const vector& x);
 		~vector();
-	};	
+	};
+
+	template < class T, class Allocator>
+	ft::vector<T, Allocator>::vector(void)
+	{
+		
+	}
+
+	template < class T, class Allocator>
+	vector<T, Allocator>::vector(void)
+	{
+		
+	}
 }
-	// ft::vector::vector(/* args */)
-	// {
-	// }
+
 	
 	// ft::vector::~vector()
 	// {
+
 	// }
 
 #endif
