@@ -8,6 +8,17 @@
 		"__bit_reference": "cpp",
 		"bitset": "cpp",
 		"initializer_list": "cpp",
-		"string_view": "cpp"
+		"string_view": "cpp",
+		"iosfwd": "cpp",
+		"iterator": "cpp",
+		"algorithm": "cpp",
+		"__hash_table": "cpp",
+		"array": "cpp",
+		"unordered_map": "cpp",
+		"utility": "cpp",
+		"__node_handle": "cpp",
+		"memory_resource": "cpp",
+		"sstream": "cpp",
+		"exception": "cpp"
 	}
 }
