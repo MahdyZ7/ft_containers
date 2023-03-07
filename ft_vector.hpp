@@ -2,9 +2,9 @@
 #define FT_VECTOR_HPP
 
 #include <iostream>
-#include <algorithm>
-#include <exception>
-#include <iterator>
+// #include <algorithm>
+// #include <exception>
+// #include <iterator>
 
 namespace ft
 {
@@ -14,6 +14,9 @@ namespace ft
 	{
 	private:
 		allocator_type::size_type	size;
+		allocator_traits<allocator_type>	begin;
+		allocator_traits<allocator_type>	end;
+		
 	public:
 		// constructors;
 		vector();
