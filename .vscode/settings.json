@@ -19,6 +19,11 @@
 		"__node_handle": "cpp",
 		"memory_resource": "cpp",
 		"sstream": "cpp",
-		"exception": "cpp"
+		"exception": "cpp",
+		"stack": "cpp",
+		"functional": "cpp",
+		"__functional_base": "cpp",
+		"deque": "cpp",
+		"__memory": "cpp"
 	}
 }

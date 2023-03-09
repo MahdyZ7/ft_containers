@@ -13,10 +13,14 @@ namespace ft
 	class vector
 	{
 	private:
-		allocator_type::size_type	size;
-		allocator_traits<allocator_type>	begin;
-		allocator_traits<allocator_type>	end;
-		
+		size_t	p_size;
+		// allocator_traits<allocator_type>	begin;
+		// allocator_traits<allocator_type>	end;
+		T*									p_begin;
+		T*									p_end;
+		T*									p_end_of_storage;
+		Allocator 							m_alloc;
+
 	public:
 		// constructors;
 		vector();
@@ -28,9 +32,9 @@ namespace ft
 		vector (const vector& x);
 
 		// capacity
-		allocator_type::size_type size() const {return size;}
-		bool empty() const {return (size == 0);} //begin() == end()
-		allocator_type::size_type max_size() const {return (std::distance(begin(), end()));} // to be tested
+		size_t size() const {return p_size;}
+		bool empty() const {return (size() == 0);} //begin() == end()
+		size_t max_size() const {return (std::distance(p_begin(), p_end()));} // to be tested
 		// void reserve(allocator_type::size_type new_cap);
 		
 		// destructor
@@ -40,7 +44,11 @@ namespace ft
 	template < class T, class Allocator>
 	ft::vector<T, Allocator>::vector(void)
 	{
-		begin = NULL;	
+		p_begin = nullptr;
+		p_end = nullptr;
+		p_end_of_storage = nullptr;
+		// begin = NULL;
+		// end = NULL;
 	}
 
 	template < class T, class Allocator>

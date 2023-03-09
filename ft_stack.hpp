@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ft_stack.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/09 11:01:58 by ayassin          ###   ########.fr       */
+/*   Created: 2023/03/09 10:07:05 by ayassin           #+#    #+#             */
+/*   Updated: 2023/03/09 11:09:40 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_vector.hpp"
-#include "ft_stack.hpp"
-// #include <vector>
-#include <iostream>
+#ifndef FT_STACK_HPP
+# define FT_STACK_HPP
 
-int main(void)
+#include <vector>
+#include <stack>
+
+namespace ft
 {
-	// std::vector<int> a = std::vector<int>();
-	std::cout << "Hello world";
+	template <class T, class Container = deque<T> >
+	class stack{
+		
+	};
+
+	
 }
+
+#endif
