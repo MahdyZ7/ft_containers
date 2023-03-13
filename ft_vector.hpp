@@ -37,6 +37,12 @@ namespace ft
 		size_t max_size() const {return (std::distance(p_begin(), p_end()));} // to be tested
 		// void reserve(allocator_type::size_type new_cap);
 		
+		//modifiers
+		void	push_back(const T &val)
+		{
+			if (size == size)
+			;
+		}
 		// destructor
 		~vector();
 	};

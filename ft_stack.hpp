@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:07:05 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/11 17:48:13 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/13 15:38:06 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ namespace ft
 			// explicit stack (const Container& ctnr = Container()) : c(ctnr) {}
 			bool empty() const {return c.empty();}
 			size_t size() const {return c.size();}
-			typename Container::value_type& top() {return c.back();}
-			void push (const typename Container::value_type& val) {c.push_back(val);}
+			T& top() {return c.back();}
+			void push (const T& val) {c.push_back(val);}
 			void pop() {c.pop_back();}
 			void swap (stack& l){std::swap(c, l.c);} // to be replaced by ft
 	};
