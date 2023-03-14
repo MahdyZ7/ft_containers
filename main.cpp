@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/14 10:14:07 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/14 19:12:44 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ int	main()
 {
 	std::vector<int> a;
 	std::cout << a.capacity() << std::endl;
+	std::vector<int> b(10);
+	std::cout << b.capacity() << std::endl;
+	//  a.pop_back();
 	for (int i = 0; i < 100; ++i)
 	{
-		a.push_back(i);
-		std::cout << a.capacity() << std::endl;
+		b.push_back(i);
+		std::cout << b.capacity() << std::endl;
 	}
 }

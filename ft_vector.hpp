@@ -61,17 +61,18 @@ namespace ft
 		{
 			if (capacity == 0)
 			{
-				//resurev(++capacity);
+				//resurve(++capacity);
 			}
 			else if (m_size == capacity)
 			{
-				// reserve (capacity * 2)
+				// resurve (capacity * 2)
 				// capacity <<= 2;
 				// realocate double the capacity
 			}
 			myallocator.construct(data + m_size, val);
 			// data[size++] = val;
 		}
+
 
 		void	resize(size_t n, T val = T())
 		{
@@ -82,9 +83,17 @@ namespace ft
 
 		}
 
-		T	pop_back()
+		void	pop_back()
 		{
-			;
+			myallocator.destroy(data + --m_size);
+		}
+
+		void	reserve(size_t n)
+		{
+			ft::vector<T>	temp(10);
+			for (typename T::iterator it = p_begin; it != p_end; ++it)
+				temp.push_back(*it);
+			std::swap(temp);
 		}
 		// destructor
 		~vector();
