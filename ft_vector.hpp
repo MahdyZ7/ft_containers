@@ -2,7 +2,7 @@
 #define FT_VECTOR_HPP
 
 #include <iostream>
-#include <vector>
+// #include <vector>
 // #include <algorithm>
 // #include <exception>
 // #include <iterator>
@@ -20,8 +20,8 @@ namespace ft
 		// allocator_traits<allocator_type>	end;
 		T*			data;
 		T*			p_begin;
-		T*			p_end;
-		T*			p_end_of_storage;
+		// T*			p_end;
+		// T*			p_end_of_storage;
 		Allocator	myallocator;
 
 	public:
@@ -50,12 +50,42 @@ namespace ft
 					InputIterator last, const Allocator& alloc);
 		vector (const vector& x);
 
-		// m_capacity
-		size_t size() const {return m_size;}
-		bool empty() const {return (size() == 0);} //begin() == end()
-		size_t max_size() const {return (std::distance(p_begin(), p_end()));} // m_capacity to be tested
-		// void reserve(allocator_type::size_type new_cap);
+		// Capacity
+		size_t	size() const {return m_size;}
+		size_t	max_size() const {return myallocator.max_size();} // to be tested
+		size_t	capacity() const {return m_capacity;} // to be tested
+		void	resize(size_t n, T val = T())
+		{
+			while (m_size <  n)
+				pop_back();
+			int x = 0;
+			if (n > m_capacity)
+				reserve(n);
+			while (n > m_size)
+				push_back(val);
+		}
+		bool	empty() const {return (m_size == 0);}
+		void	reserve(size_t new_cap)
+		{
+			if (new_cap > m_capacity) 
+			{
+				Allocator temp_allocator;
+				T* new_data = temp_allocator.allocate(new_cap);
+				for (size_t i = 0; i < m_size; ++i)
+				{
+					temp_allocator.construct(&new_data[i], data[i]);
+					temp_allocator.destroy(&data[i]);
+				}
+				if (data != nullptr)
+					temp_allocator.deallocate(data, m_capacity);
+				data = new_data;
+				m_capacity = new_cap;
+			}
+		}
 		
+		// Element access
+		typename allocator_type::reference operator[] (size_t n) { return data[n]; }
+		const typename allocator_type::reference operator[] (size_t n) { return data[n]; }
 		//modifiers
 		void	push_back(const T &val)
 		{
@@ -74,40 +104,12 @@ namespace ft
 		}
 
 
-		void	resize(size_t n, T val = T())
-		{
-			while (m_size <  n)
-				pop_back();
-			int x = 0;
-			// if (n > m_capacity)
-			// 	resurve( new value)
-			while (n < m_size)
-				push_back(val);
-
-		}
 
 		void	pop_back()
 		{
 			myallocator.destroy(data + --m_size);
 		}
 
-		void	reserve(size_t new_cap)
-		{
-			if (new_cap > m_capacity) 
-			{
-            	Allocator temp_allocator;
-				T* new_data = temp_allocator.allocate(new_cap);
-				for (size_t i = 0; i < m_size; ++i) {
-					temp_allocator.construct(&new_data[i], data[i]);
-					temp_allocator.destroy(&data[i]);
-				}
-				if (data != nullptr) {
-					temp_allocator.deallocate(data, m_capacity);
-            }
-            data = new_data;
-            m_capacity = new_cap;
-        }
-		}
 		// destructor
 		~vector();
 	};
@@ -116,8 +118,8 @@ namespace ft
 	ft::vector<T, Allocator>::vector(void)
 	{
 		p_begin = nullptr;
-		p_end = nullptr;
-		p_end_of_storage = nullptr;
+		// p_end = nullptr;
+		// p_end_of_storage = nullptr;
 		m_capacity = 0;
 		m_size = 0;
 		
@@ -130,8 +132,8 @@ namespace ft
 	ft::vector<T, Allocator>::vector(const Allocator& alloc)
 	{
 		p_begin = nullptr;
-		p_end = nullptr;
-		p_end_of_storage = nullptr;
+		// p_end = nullptr;
+		// p_end_of_storage = nullptr;
 		m_capacity = 0;
 		m_size = 0;
 		
@@ -153,8 +155,9 @@ namespace ft
 		if (this == &x)
 			return ;
 		reserve(x.size());
-		for (typename T::iterator it = x.p_begin; it != p_end; ++it)
-			push_back(*it);
+		// T*	end_temp = ;
+		// for (typename T::iterator it = x.p_begin; it != p_end; ++it)
+		// 	push_back(*it);
 		
 	}
 
@@ -173,70 +176,3 @@ namespace ft
 	
 
 #endif
-
-/*
-#include <memory>
-
-template <typename T>
-class MyVector {
-public:
-    MyVector() : m_size(0), m_capacity(0), m_data(nullptr) {}
-
-    ~MyVector() {
-        if (m_data != nullptr) {
-            std::allocator<T> allocator;
-            allocator.deallocate(m_data, m_capacity);
-        }
-    }
-
-    void push_back(const T& value) {
-        if (m_size == m_capacity) {
-            reserve(m_capacity == 0 ? 1 : m_capacity * 2);
-        }
-        m_data[m_size++] = value;
-    }
-
-    void reserve(size_t newCapacity) {
-        if (newCapacity > m_capacity) {
-            std::allocator<T> allocator;
-            T* newData = allocator.allocate(newCapacity);
-            for (size_t i = 0; i < m_size; ++i) {
-                allocator.construct(&newData[i], m_data[i]);
-                allocator.destroy(&m_data[i]);
-            }
-            if (m_data != nullptr) {
-                allocator.deallocate(m_data, m_capacity);
-            }
-            m_data = newData;
-            m_capacity = newCapacity;
-        }
-    }
-
-    T& operator[](size_t index) {
-        return m_data[index];
-    }
-
-    const T& operator[](size_t index) const {
-        return m_data[index];
-    }
-
-    size_t size() const {
-        return m_size;
-    }
-
-    size_t max_size() const {
-        return std::allocator<T>().max_size();
-    }
-
-private:
-    size_t m_size;
-    size_t m_capacity;
-    T* m_data;
-};
-
-int main() {
-    MyVector<int> v;
-    std::cout << "Maximum size of vector v is: " << v.max_size() << std::endl;
-    return 0;
-}
-*/
