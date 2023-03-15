@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/14 19:12:44 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/15 10:06:17 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,22 @@ int	main()
 	std::vector<int> a;
 	std::cout << a.capacity() << std::endl;
 	std::vector<int> b(10);
+	b.reserve(13);
+	std::cout << b.capacity() << std::endl;
+	b.resize(51, 10);
 	std::cout << b.capacity() << std::endl;
 	//  a.pop_back();
+	b.reserve(111);
+	for (auto it = b.begin(); it < b.end(); it++)
+		std::cout << "the number inside is: " << *it << std::endl;
 	for (int i = 0; i < 100; ++i)
 	{
 		b.push_back(i);
 		std::cout << b.capacity() << std::endl;
 	}
+	
+	std::cout << "the number inside is: ";
+	for (auto it = b.begin(); it < b.end(); it++)
+		std::cout << *it << ", ";
+	std::cout << std::endl;
 }
