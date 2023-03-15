@@ -4,7 +4,7 @@
 #include <iostream>
 // #include <vector>
 // #include <algorithm>
-// #include <exception>
+#include <exception>
 // #include <iterator>
 
 namespace ft
@@ -18,7 +18,7 @@ namespace ft
 		size_t		m_capacity;
 		// allocator_traits<allocator_type>	begin;
 		// allocator_traits<allocator_type>	end;
-		T*			data;
+		T*			m_data;
 		T*			p_begin;
 		// T*			p_end;
 		// T*			p_end_of_storage;
@@ -73,19 +73,37 @@ namespace ft
 				T* new_data = temp_allocator.allocate(new_cap);
 				for (size_t i = 0; i < m_size; ++i)
 				{
-					temp_allocator.construct(&new_data[i], data[i]);
-					temp_allocator.destroy(&data[i]);
+					temp_allocator.construct(&new_data[i], m_data[i]);
+					temp_allocator.destroy(&m_data[i]);
 				}
-				if (data != nullptr)
-					temp_allocator.deallocate(data, m_capacity);
-				data = new_data;
+				if (m_data != nullptr)
+					temp_allocator.deallocate(m_data, m_capacity);
+				m_data = new_data;
 				m_capacity = new_cap;
 			}
 		}
 		
 		// Element access
-		typename allocator_type::reference operator[] (size_t n) { return data[n]; }
-		const typename allocator_type::reference operator[] (size_t n) { return data[n]; }
+		typename Allocator::reference operator[] (size_t n) { return m_data[n]; }
+		// typename Allocator::const_reference operator[] (size_t n) { return m_data[n]; }
+		typename Allocator::reference at (size_t n)
+		{
+			if (n >= m_size)
+				throw std::out_of_range("vector");
+			return (m_data[n]);
+		}
+		// typename Allocator::const_reference::reference at (size_t n)
+		// {
+		// 	if (n >= m_size)
+		// 		throw std::out_of_range("vector");
+		// 	return (m_data[n]);
+		// }
+		typename Allocator::reference front (){ return (m_data[0]); }
+		// typename Allocator::const_reference front () const { return (m_data[0]); }
+		typename Allocator::reference back (){ return (m_data[m_size - 1]); }
+		// typename Allocator::const_reference back () const { return (m_data[m_size - 1]); }
+		T* data() { return m_data; };
+		// const T* data() const { return m_data;} ;
 		//modifiers
 		void	push_back(const T &val)
 		{
@@ -99,15 +117,15 @@ namespace ft
 				// m_capacity <<= 2;
 				// realocate double the m_capacity
 			}
-			myallocator.construct(data + m_size, val);
-			// data[size++] = val;
+			myallocator.construct(m_data + m_size, val);
+			// m_data[size++] = val;
 		}
 
 
 
 		void	pop_back()
 		{
-			myallocator.destroy(data + --m_size);
+			myallocator.destroy(m_data + --m_size);
 		}
 
 		// destructor
@@ -166,9 +184,9 @@ namespace ft
 	{
 		for (int i = 0; i < m_size; ++i)
 		{
-			myallocator.destroy(data + i);
+			myallocator.destroy(m_data + i);
 		}
-		myallocator.deallocate(data, m_capacity);
+		myallocator.deallocate(m_data, m_capacity);
 	}
 
 }

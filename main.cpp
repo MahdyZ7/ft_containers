@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/15 17:57:45 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/15 20:14:36 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,11 @@ int	main()
 	for (auto it = b.begin(); it < b.end(); it++)
 		std::cout << *it << ", ";
 	std::cout << std::endl;
+	try{
+		b.at(1000);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what();
+	}
 }
