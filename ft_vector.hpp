@@ -192,5 +192,15 @@ namespace ft
 }
 
 	
+//  template <typename U = T>
+//     typename std::enable_if<std::is_same<U, T>::value && std::is_same<U&, decltype(*data_)>::value, U&>::type
+//     front() {
+//         return data_[0];
+//     }
 
+//     template <typename U = T>
+//     typename std::enable_if<std::is_same<U, T>::value && std::is_same<const U&, decltype(*data_)>::value, const U&>::type
+//     front() const {
+//         return data_[0];
+//     }
 #endif
