@@ -84,41 +84,73 @@ namespace ft
 		}
 		
 		// Element access
-		typename Allocator::reference operator[] (size_t n) { return m_data[n]; }
-		// typename Allocator::const_reference operator[] (size_t n) { return m_data[n]; }
-		typename Allocator::reference at (size_t n)
+			// []
+		template <typename U = T>
+		typename std::enable_if<!std::is_const<U>::value, typename ft::vector<T>::reference>::type
+		operator[] (size_t n) { return m_data[n]; }
+			// [] const
+		template <typename U = T>
+		typename std::enable_if<std::is_const<U>::Value, typename ft::vector<T>::const_reference>::type
+		operator[] (size_t n) const { return m_data[n]; }
+			// at
+		template <typename U = T>
+		typename std::enable_if<!std::is_const<U>::Value, typename ft::vector<T>::reference>::type
+		at (size_t n)
 		{
 			if (n >= m_size)
 				throw std::out_of_range("vector");
 			return (m_data[n]);
 		}
-		// typename Allocator::const_reference::reference at (size_t n)
-		// {
-		// 	if (n >= m_size)
-		// 		throw std::out_of_range("vector");
-		// 	return (m_data[n]);
-		// }
-		typename Allocator::reference front (){ return (m_data[0]); }
-		// typename Allocator::const_reference front () const { return (m_data[0]); }
-		typename Allocator::reference back (){ return (m_data[m_size - 1]); }
-		// typename Allocator::const_reference back () const { return (m_data[m_size - 1]); }
-		T* data() { return m_data; };
-		// const T* data() const { return m_data;} ;
+			// at const
+		template <typename U = T>
+		typename std::enable_if<std::is_const<U>::Value, typename ft::vector<T>::const_reference>::type
+		at (size_t n)
+		{
+			if (n >= m_size)
+				throw std::out_of_range("vector");
+			return (m_data[n]);
+		}
+			// front
+		template <typename U = T>
+		typename std::enable_if<!std::is_const<U>::value, typename ft::vector<T>::reference>::type
+		front() { return m_data[0]; }
+		template <typename U = T>
+		typename std::enable_if<std::is_const<U>::value, typename ft::vector<T>::const_reference>::type
+			// front const
+		front() const { return m_data[0]; }
+			// back
+		template <typename U = T>
+		typename std::enable_if<!std::is_const<U>::value, typename ft::vector<T>::reference>::type
+		back() { return m_data[m_size - 1]; }
+			// back const
+		template <typename U = T>
+		typename std::enable_if<std::is_const<U>::value, typename ft::vector<T>::const_reference>::type
+		back() const { return m_data[m_size - 1]; }
+			// data
+		template <typename U = T>
+		typename std::enable_if<!std::is_const<U>::value, T*>::type
+		data() { return m_data; };
+			// data const
+		template <typename U = T>
+		typename std::enable_if<std::is_const<U>::value, const T*>::type
+		data() const { return m_data;} ;
+		
+		
 		//modifiers
 		void	push_back(const T &val)
 		{
 			if (m_capacity == 0)
 			{
-				//resurve(++m_capacity);
+				reserve(++m_capacity);
 			}
 			else if (m_size == m_capacity)
 			{
-				// resurve (m_capacity * 2)
-				// m_capacity <<= 2;
+				reserve (m_capacity * 2);
+				m_capacity <<= 2;
 				// realocate double the m_capacity
 			}
 			myallocator.construct(m_data + m_size, val);
-			// m_data[size++] = val;
+			++m_size;
 		}
 
 
@@ -126,6 +158,12 @@ namespace ft
 		void	pop_back()
 		{
 			myallocator.destroy(m_data + --m_size);
+		}
+
+		void	clear()
+		{
+			while (m_size)
+				myallocator.destroy( data + --m_size );
 		}
 
 		// destructor
