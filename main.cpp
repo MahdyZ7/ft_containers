@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/17 21:34:10 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/18 18:09:49 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,29 @@ void 	print_test(bool x, std::string str)
 }
 
 template <class T>
-void	cmp_vectors(std::vector<T> s, ft::vector<T> f, std::string test)
+void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 {
+	// 
+	print_test(s->size() == f->size(), test + "size");
 	//
-	print_test(s.size() == f.size(), test + "size");
+	print_test(s->capacity() == f->capacity(), test + "capacity");
 	//
-	print_test(s.capacity() == f.capacity(), test + "capacity");
+	print_test(s->max_size() == f->max_size(), test + "max_size");
 	//
-	print_test(s.max_size() == f.max_size(), test + "max_size");
+	print_test(s->empty() == f->empty(), test + "empty");
 	//
-	print_test(s.empty() == f.empty(), test + "empty");
-	//
-	for (size_t i = 0; i < f.size(); ++i)
+	for (size_t i = 0; i < f->size(); ++i)
 	{
-		print_test(s[i] == f[i], test + " [" + std::to_string(i) + "] operator");
+		print_test((*s)[i] == (*f)[i], test + " [" + std::to_string(i) + "] operator");
 		//
-		print_test(s.at(i) == f.at(i), test + " at("+ std::to_string(i) + ")");
+		print_test(s->at(i) == f->at(i), test + " at("+ std::to_string(i) + ")");
 		//
 	}
-	if (s.size() == 0)
+	if (s->size() == 0)
 		return ;
-	print_test(s.back() == f.back(), test + "back");
+	print_test(s->back() == f->back(), test + "back");
 	//
-	print_test(s.front() == f.front(), test + "front");
+	print_test(s->front() == f->front(), test + "front");
 	//
 }
 
@@ -104,7 +104,27 @@ int	main()
 		std::string test1 = "";
 		std::vector<int> stda;
 		ft::vector<int> fta;
-		cmp_vectors(stda, fta, test0+test1);
+		cmp_vectors(&stda, &fta, test0+test1);
+
+		test1 = "Clear empty Vector ";
+		stda.clear(); fta.clear();
+		cmp_vectors(&stda, &fta, test0+test1);
+
+		test1 = "push_back(11) ";
+		stda.push_back(11); fta.push_back(11);
+		cmp_vectors(&stda, &fta, test0+test1);
+		
+		test1 = "Reserve 10 ";
+		stda.reserve(10); fta.reserve(10);
+		std::cout << "The Capacity is std: " << stda.capacity() << \
+			" vs ft: " << fta.capacity() << std::endl;
+		cmp_vectors(&stda, &fta, test0+test1);
+
+		test1 = "Reserve 13 ";
+		stda.reserve(13); fta.reserve(13);
+		cmp_vectors(&stda, &fta, test0+test1);
+
+		// test1 = ""
 	}
 	catch (std::runtime_error e)
 	{
