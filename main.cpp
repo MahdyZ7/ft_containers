@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/18 18:09:49 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/19 16:51:11 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	// 
 	print_test(s->size() == f->size(), test + "size");
 	//
+	std::cout << "The Capacity is std: " << s->capacity() <<
+		" vs ft: " << f->capacity() << std::endl;
 	print_test(s->capacity() == f->capacity(), test + "capacity");
 	//
 	print_test(s->max_size() == f->max_size(), test + "max_size");
@@ -83,9 +85,9 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	//
 	for (size_t i = 0; i < f->size(); ++i)
 	{
-		print_test((*s)[i] == (*f)[i], test + " [" + std::to_string(i) + "] operator");
+		print_test((*s)[i] == (*f)[i], test + " [] operator");
 		//
-		print_test(s->at(i) == f->at(i), test + " at("+ std::to_string(i) + ")");
+		print_test(s->at(i) == f->at(i), test + " at()");
 		//
 	}
 	if (s->size() == 0)
@@ -96,41 +98,70 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	//
 }
 
+template <class T>
+void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
+{
+	std::string test1 = "";
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "Clear empty Vector ";
+	s->clear(); f->clear();
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "push_back(11) ";
+	s->push_back(11); f->push_back(11);
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "push_back alot ";
+	for (int i = 0; i < 100; ++i)
+	{
+		s->push_back(i); f->push_back(i);
+		cmp_vectors(s, f, test0+test1);
+	}
+	
+	test1 = "Reserve 10 ";
+	s->reserve(10); f->reserve(10);
+	// std::cout << "The Capacity is std: " << s->capacity() <<
+	// 	" vs ft: " << f->capacity() << std::endl;
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "Reserve 300 ";
+	s->reserve(300); f->reserve(300);
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "Clear full Vector ";
+	s->clear(); f->clear();
+	cmp_vectors(s, f, test0+test1);
+	
+}
+
 int	main()
 {
 	try 
 	{
 		std::string test0 = "Deafult constructor: ";
-		std::string test1 = "";
 		std::vector<int> stda;
 		ft::vector<int> fta;
-		cmp_vectors(&stda, &fta, test0+test1);
-
-		test1 = "Clear empty Vector ";
-		stda.clear(); fta.clear();
-		cmp_vectors(&stda, &fta, test0+test1);
-
-		test1 = "push_back(11) ";
-		stda.push_back(11); fta.push_back(11);
-		cmp_vectors(&stda, &fta, test0+test1);
 		
-		test1 = "Reserve 10 ";
-		stda.reserve(10); fta.reserve(10);
-		std::cout << "The Capacity is std: " << stda.capacity() << \
+		repetative_talk(&stda, &fta, test0);
+
+		test0 = "Copy constructor: ";
+		std::vector<int> stda_copy(stda);
+		ft::vector<int> fta_copy(fta);
+		std::cout << "The Capacity is std: " << stda.capacity() <<
 			" vs ft: " << fta.capacity() << std::endl;
-		cmp_vectors(&stda, &fta, test0+test1);
-
-		test1 = "Reserve 13 ";
-		stda.reserve(13); fta.reserve(13);
-		cmp_vectors(&stda, &fta, test0+test1);
-
-		// test1 = ""
+		std::cout << "The Capacity is std: " << stda_copy.capacity() <<
+			" vs ft: " << fta_copy.capacity() << std::endl;
+		std::cout << "The Size is std: " << stda_copy.size() <<
+			" vs ft: " << fta_copy.size() << std::endl;
+		// repetative_talk(&stda_copy, &fta_copy, test0);
+		
 	}
-	catch (std::runtime_error e)
+	catch (std::runtime_error &e)
 	{
 		std::cout << "Error: " << e.what() << std::endl;
 	}
-	catch (std::exception e )
+	catch (std::exception &e)
 	{
 		std::cout << "Error: " << e.what() << std::endl;
 	}

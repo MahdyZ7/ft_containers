@@ -49,6 +49,22 @@ namespace ft
 		vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 		vector (const vector& x);
 
+
+		// = operator
+		vector& operator= (const vector& x)
+		{
+			if (this != &x)
+			{
+				clear();
+				if (m_capacity != 0)
+					myallocator.deallocate(m_data, m_capacity);
+				m_data = myallocator.allocate(x.capacity);
+				for (size_t i; i < x.size; ++i)
+					myallocator.construct(m_data + i, x[i]);
+			}
+			return (this);
+		}
+
 		// Capacity
 		size_t	size() const {return m_size;}
 		size_t	max_size() const {return myallocator.max_size();} // to be tested
@@ -74,7 +90,7 @@ namespace ft
 					temp_allocator.construct(&new_data[i], m_data[i]);
 					temp_allocator.destroy(&m_data[i]);
 				}
-				if (m_data != nullptr)
+				if (m_data != NULL)
 					temp_allocator.deallocate(m_data, m_capacity);
 				m_data = new_data;
 				m_capacity = new_cap;
@@ -231,6 +247,7 @@ namespace ft
 			return ;
 		m_size = 0;
 		m_capacity = x.m_capacity;
+		std::cout << "cap " << m_capacity << " original cap: " << x.m_capacity << std::endl; 
 		m_data = myallocator.allocate(m_capacity);
 		while (m_size < x.m_size)
 		{
@@ -249,7 +266,8 @@ namespace ft
 		{
 			myallocator.destroy(m_data + i);
 		}
-		myallocator.deallocate(m_data, m_capacity);
+		if (m_capacity)
+			myallocator.deallocate(m_data, m_capacity);
 	}
 
 }
