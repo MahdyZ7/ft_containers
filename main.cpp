@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/19 16:51:11 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:27:12 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,22 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 	
 	test1 = "Reserve 10 ";
 	s->reserve(10); f->reserve(10);
-	// std::cout << "The Capacity is std: " << s->capacity() <<
-	// 	" vs ft: " << f->capacity() << std::endl;
 	cmp_vectors(s, f, test0+test1);
 
 	test1 = "Reserve 300 ";
 	s->reserve(300); f->reserve(300);
 	cmp_vectors(s, f, test0+test1);
 
+	test1 = "Reserve 11 ";
+	s->reserve(11); f->reserve(11);
+	cmp_vectors(s, f, test0+test1);
+
 	test1 = "Clear full Vector ";
 	s->clear(); f->clear();
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "Reserve 100 ";
+	s->reserve(100); f->reserve(100);
 	cmp_vectors(s, f, test0+test1);
 	
 }
@@ -145,16 +151,28 @@ int	main()
 		
 		repetative_talk(&stda, &fta, test0);
 
+
+		stda.push_back(50); fta.push_back(50);
+		stda.push_back(50); fta.push_back(50);
+		stda.push_back(50); fta.push_back(50);
 		test0 = "Copy constructor: ";
 		std::vector<int> stda_copy(stda);
 		ft::vector<int> fta_copy(fta);
-		std::cout << "The Capacity is std: " << stda.capacity() <<
-			" vs ft: " << fta.capacity() << std::endl;
-		std::cout << "The Capacity is std: " << stda_copy.capacity() <<
-			" vs ft: " << fta_copy.capacity() << std::endl;
-		std::cout << "The Size is std: " << stda_copy.size() <<
-			" vs ft: " << fta_copy.size() << std::endl;
-		// repetative_talk(&stda_copy, &fta_copy, test0);
+
+		
+		// std::cout << "The Capacity is std: " << stda.capacity() <<
+		// 	" vs ft: " << fta.capacity() << std::endl;
+		// std::cout << "The Capacity is std: " << stda_copy.capacity() <<
+		// 	" vs ft: " << fta_copy.capacity() << std::endl;
+		// std::cout << "The Size is std: " << stda_copy.size() <<
+		// 	" vs ft: " << fta_copy.size() << std::endl;
+		repetative_talk(&stda_copy, &fta_copy, test0);
+
+		test0 = "Assinment operatopr: ";
+		std::vector<int> stda_ass = stda;
+		ft::vector<int> fta_ass = fta;
+		
+		repetative_talk(&stda_ass, &fta_ass, test0);
 		
 	}
 	catch (std::runtime_error &e)

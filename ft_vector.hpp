@@ -246,7 +246,7 @@ namespace ft
 		if (this == &x)
 			return ;
 		m_size = 0;
-		m_capacity = x.m_capacity;
+		m_capacity = x.m_size;
 		std::cout << "cap " << m_capacity << " original cap: " << x.m_capacity << std::endl; 
 		m_data = myallocator.allocate(m_capacity);
 		while (m_size < x.m_size)
