@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/19 19:27:12 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:28:32 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,25 @@ int	main()
 		test0 = "Assinment operatopr: ";
 		std::vector<int> stda_ass = stda;
 		ft::vector<int> fta_ass = fta;
-		
 		repetative_talk(&stda_ass, &fta_ass, test0);
+
+		test0 = "size constructor (0, default values): ";
+		std::vector<int> stda_size(0);
+		ft::vector<int> fta_size(0);
 		
+		repetative_talk(&stda_size, &fta_size, test0);
+		
+		test0 = "size constructor (70, default values): ";
+		std::vector<int> stda_size1(70);
+		ft::vector<int> fta_size1(70);
+		
+		repetative_talk(&stda_size1, &fta_size1, test0);
+		
+		test0 = "size constructor (70, 90): ";
+		std::vector<int> stda_size2(70, 90);
+		ft::vector<int> fta_size2(70, 90);
+		
+		repetative_talk(&stda_size2, &fta_size2 test0);
 	}
 	catch (std::runtime_error &e)
 	{
