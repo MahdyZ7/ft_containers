@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/21 10:19:49 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:20:07 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,27 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 	test1 = "Reserve 100 ";
 	s->reserve(100); f->reserve(100);
 	cmp_vectors(s, f, test0+test1);
+
+	test1 = "assign 30 11 ";
+	s->assign(300,11); f->assign(300, 11);
+	cmp_vectors(s, f, test0+test1);
 	
 }
 
 int	main()
 {
+
+	// {
+	// 	std::vector<int> stda;
+	// 	ft::vector<int> fta;
+
+	// 	stda.reserve(300); fta.reserve(300);
+
+	// 	stda.assign(30, 1); fta.assign(30,1);
+	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;
+	// 	return 0; 
+	// }
+	
 	try 
 	{
 		std::string test0 = "Deafult constructor: ";
@@ -160,12 +176,6 @@ int	main()
 		ft::vector<int> fta_copy(fta);
 
 		
-		// std::cout << "The Capacity is std: " << stda.capacity() <<
-		// 	" vs ft: " << fta.capacity() << std::endl;
-		// std::cout << "The Capacity is std: " << stda_copy.capacity() <<
-		// 	" vs ft: " << fta_copy.capacity() << std::endl;
-		// std::cout << "The Size is std: " << stda_copy.size() <<
-		// 	" vs ft: " << fta_copy.size() << std::endl;
 		repetative_talk(&stda_copy, &fta_copy, test0);
 
 		test0 = "Assinment operatopr: ";

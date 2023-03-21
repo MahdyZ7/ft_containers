@@ -116,8 +116,8 @@ namespace ft
 			// []
 		reference operator[] (size_t n) { return m_data[n]; }
 			// [] const
-
-		const_reference operator[] (size_t n) const { return m_data[n]; }
+	const_reference operator[] (size_t n) const { return m_data[n]; }
+		
 			// at
 		reference at (size_t n)
 		{
@@ -126,30 +126,51 @@ namespace ft
 			return (m_data[n]);
 		}
 			// at const
-
 		const_reference at (size_t n) const
 		{
 			if (n >= m_size)
 				throw std::out_of_range("vector");
 			return (m_data[n]);
 		}
+		
 			// front
 		reference front() { return m_data[0]; }
-
 			// front const
 		const_reference front() const { return m_data[0]; }
 			// back
+		
 		reference back() { return m_data[m_size - 1]; }
 			// back const
-
 		const_reference back() const { return m_data[m_size - 1]; }
 			// data
+		
 		reference data() { return m_data; };
 			// data const
 		const_reference data() const { return m_data;} ;
 		
 		
 		//modifiers
+
+		// template <class InputIterator>  void assign (InputIterator first, InputIterator last); // to be done later
+
+		void assign (size_t n, const T& val)
+		{
+			Allocator temp_allocator = myallocator;
+			T* new_data = temp_allocator.allocate(n);
+			size_t i = 0;
+			for (; i < n; ++i)
+			{
+				myallocator.destroy(m_data + i);
+				temp_allocator.construct(new_data + i, val);
+			}
+			for (; i < m_size; ++i)
+				temp_allocator.construct(new_data + i, m_data[i]);
+			if (m_data != NULL)
+				temp_allocator.deallocate(m_data, m_capacity);
+			m_data = new_data;
+			m_size = n;
+		}
+
 		void	push_back(const T &val)
 		{
 			if (m_capacity == 0)
