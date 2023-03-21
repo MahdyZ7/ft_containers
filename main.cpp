@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/21 09:27:04 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/21 10:19:49 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void 	print_test(bool x, std::string str)
 {
 	if (x == false)
 		throw std::runtime_error("\033[0;31m" + str + " does not match" + "\033[0m");
-	std::cout << "\033[0;32m" << str << ": completed" << "\033[0m" << std::endl;
+	// std::cout << "\033[0;32m" << str << ": completed" << "\033[0m" << std::endl;
 }
 
 template <class T>
@@ -75,8 +75,8 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	// 
 	print_test(s->size() == f->size(), test + "size");
 	//
-	std::cout << "The Capacity is std: " << s->capacity() <<
-		" vs ft: " << f->capacity() << std::endl;
+	// std::cout << "The Capacity is std: " << s->capacity() <<
+	// 	" vs ft: " << f->capacity() << std::endl;
 	print_test(s->capacity() == f->capacity(), test + "capacity");
 	//
 	print_test(s->max_size() == f->max_size(), test + "max_size");

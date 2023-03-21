@@ -42,14 +42,12 @@ namespace ft
 
 
 		// constructors;
-		// vector();
 		explicit vector (const Allocator& alloc = Allocator());
-		template<typename std::enable_if<std::is_integral<T>::value>::type>
 		explicit vector (size_t n, const T& val = T(), const Allocator& alloc = Allocator());
-		template <class InputIterator>
-		vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
+		// template <class InputIterator>
+		// vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 		vector (const vector& x);
-		template <class InputIterator>
+		// template <class InputIterator>
 		// vector(InputIterator first,
         //     	typename std::enable_if<is_iterator   <InputIterator>::value &&
 		// 		std::is_constructible<
@@ -116,16 +114,11 @@ namespace ft
 		
 		// Element access
 			// []
-		// template <typename U = T>
-		// typename std::enable_if<!std::is_const<T>::value, typename ft::vector<T>::reference>::type
 		reference operator[] (size_t n) { return m_data[n]; }
 			// [] const
-		// template <typename U = T>
-		// typename std::enable_if<std::is_const<T>::value, typename ft::vector<T>::const_reference>::type
+
 		const_reference operator[] (size_t n) const { return m_data[n]; }
 			// at
-		// template <typename U = T>
-		// typename std::enable_if<!std::is_const<T>::value, typename ft::vector<T>::reference>::type
 		reference at (size_t n)
 		{
 			if (n >= m_size)
@@ -133,8 +126,7 @@ namespace ft
 			return (m_data[n]);
 		}
 			// at const
-		// template <typename U = T>
-		// typename std::enable_if<std::is_const<T>::value, typename ft::vector<T>::const_reference>::type
+
 		const_reference at (size_t n) const
 		{
 			if (n >= m_size)
@@ -142,28 +134,18 @@ namespace ft
 			return (m_data[n]);
 		}
 			// front
-		// template <typename U = T>
-		// typename std::enable_if<!std::is_const<T>::value, typename ft::vector<T>::reference>::type
 		reference front() { return m_data[0]; }
-		// template <typename U = T>
-		// typename std::enable_if<std::is_const<T>::value, typename ft::vector<T>::const_reference>::type
+
 			// front const
 		const_reference front() const { return m_data[0]; }
 			// back
-		// template <typename U = T>
-		// typename std::enable_if<!std::is_const<T>::value, typename ft::vector<T>::reference>::type
 		reference back() { return m_data[m_size - 1]; }
 			// back const
-		// template <typename U = T>
-		// typename std::enable_if<std::is_const<T>::value, typename ft::vector<T>::const_reference>::type
+
 		const_reference back() const { return m_data[m_size - 1]; }
 			// data
-		// template <typename U = T>
-		// typename std::enable_if<!std::is_const<T>::value, T*>::type
 		reference data() { return m_data; };
 			// data const
-		// template <typename U = T>
-		// typename std::enable_if<std::is_const<T>::value, const T*>::type
 		const_reference data() const { return m_data;} ;
 		
 		
@@ -201,21 +183,6 @@ namespace ft
 		~vector();
 	};
 
-	// template < class T, class Allocator>
-	// ft::vector<T, Allocator>::vector(void)
-	// {
-	// 	// p_begin = nullptr;
-	// 	// m_data = nullptr;
-	// 	// p_end = nullptr;
-	// 	// p_end_of_storage = nullptr;
-	// 	m_capacity = 0;
-	// 	m_size = 0;
-		
-	// 	m_data = myallocator.allocate(0);
-	// 	// begin = NULL;
-	// 	// end = NULL;
-	// }
-
 	template < class T, class Allocator>
 	ft::vector<T, Allocator>::vector(const Allocator& alloc)
 	{
@@ -229,7 +196,6 @@ namespace ft
 	}
 
 	template < class T, class Allocator>
-	template<typename std::enable_if<std::is_integral<T>::value>::type>
 	ft::vector<T, Allocator>::vector (size_t n, const T& val, const Allocator& alloc)
 	{
 		m_size = 0;
@@ -252,19 +218,19 @@ namespace ft
     //                                 value_type,
     //                                 typename std::iterator_traits<InputIterator>::reference>::value,
     //                              InputIterator>::type last, const Allocator& alloc = Allocator())
-	template < class T, class Allocator>
-	template <class InputIterator>
-	ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc)
-	{
-		m_capacity = std::distance(first, last); // to be checked
-		myallocator = alloc;
-		m_data = myallocator.allocate(m_capacity); // to be checked
-		for (typename T::iterator it = first; it != last; ++it)
-		{
-			myallocator.construct(m_data + m_size, *it);
-			++m_size;
-		}
-	}
+	// template < class T, class Allocator>
+	// template <class InputIterator>
+	// ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc)
+	// {
+	// 	m_capacity = std::distance(first, last); // to be checked
+	// 	myallocator = alloc;
+	// 	m_data = myallocator.allocate(m_capacity); // to be checked
+	// 	for (typename T::iterator it = first; it != last; ++it)
+	// 	{
+	// 		myallocator.construct(m_data + m_size, *it);
+	// 		++m_size;
+	// 	}
+	// }
 
 	template < class T, class Allocator>
 	ft::vector<T, Allocator>::vector(const vector& x)
@@ -273,16 +239,12 @@ namespace ft
 			return ;
 		m_size = 0;
 		m_capacity = x.m_size;
-		std::cout << "cap " << m_capacity << " original cap: " << x.m_capacity << std::endl; 
 		m_data = myallocator.allocate(m_capacity);
 		while (m_size < x.m_size)
 		{
 			myallocator.construct(m_data + m_size, x.m_data[m_size]);
 			++m_size;
 		}
-		// T*	end_temp = ;
-		// for (typename T::iterator it = x.p_begin; it != p_end; ++it)
-		// 	push_back(*it);
 	}
 
 	template < class T, class Allocator>
