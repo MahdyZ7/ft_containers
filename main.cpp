@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/20 15:28:32 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/21 09:27:04 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	main()
 		std::vector<int> stda_size2(70, 90);
 		ft::vector<int> fta_size2(70, 90);
 		
-		repetative_talk(&stda_size2, &fta_size2 test0);
+		repetative_talk(&stda_size2, &fta_size2, test0);
 	}
 	catch (std::runtime_error &e)
 	{

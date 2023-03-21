@@ -5,7 +5,7 @@
 #include <vector>
 // #include <algorithm>
 #include <exception>
-// #include <iterator>
+#include <iterator>
 
 namespace ft
 {
@@ -44,11 +44,28 @@ namespace ft
 		// constructors;
 		// vector();
 		explicit vector (const Allocator& alloc = Allocator());
+		template<typename std::enable_if<std::is_integral<T>::value>::type>
 		explicit vector (size_t n, const T& val = T(), const Allocator& alloc = Allocator());
 		template <class InputIterator>
 		vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
 		vector (const vector& x);
+		template <class InputIterator>
+		// vector(InputIterator first,
+        //     	typename std::enable_if<is_iterator   <InputIterator>::value &&
+		// 		std::is_constructible<
+        //                             value_type,
+        //                             typename std::iterator_traits<InputIterator>::reference>::value,
+        //                          InputIterator>::type last, const Allocator& alloc = Allocator());
 
+		// template<typename InputIterator, typename = typename std::enable_if<is_iterator<InputIterator>::value>::type>
+		// std::vector<typename std::iterator_traits<InputIterator>::value_type> make_vector(InputIterator first, InputIterator last) {
+		// 	return std::vector<typename std::iterator_traits<InputIterator>::value_type>(first, last);
+		// }
+
+		// template<typename T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
+		// std::vector<T> make_vector(size_t n, const T& val = T()) {
+		// 	return std::vector<T>(n, val);
+		// }
 
 		// = operator
 		vector& operator= (const vector& x)
@@ -212,6 +229,7 @@ namespace ft
 	}
 
 	template < class T, class Allocator>
+	template<typename std::enable_if<std::is_integral<T>::value>::type>
 	ft::vector<T, Allocator>::vector (size_t n, const T& val, const Allocator& alloc)
 	{
 		m_size = 0;
@@ -226,6 +244,14 @@ namespace ft
 	}
 
 
+	// template < class T, class Allocator>
+	// template <class InputIterator>
+	// 	vector(InputIterator first,
+    //         	typename std::enable_if<is_iterator  <InputIterator>::value &&
+	// 			std::is_constructible<
+    //                                 value_type,
+    //                                 typename std::iterator_traits<InputIterator>::reference>::value,
+    //                              InputIterator>::type last, const Allocator& alloc = Allocator())
 	template < class T, class Allocator>
 	template <class InputIterator>
 	ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc)
