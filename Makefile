@@ -6,7 +6,7 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/03/19 15:14:40 by ayassin          ###   ########.fr        #
+#    Updated: 2023/03/27 21:30:20 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ $(OBJDIR)/%.o: %.cpp
 
 $(NAME) : $(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	./$(NAME)
+# ./$(NAME)
 
 clean:
 	rm -f $(OBJS) $(DEP)
