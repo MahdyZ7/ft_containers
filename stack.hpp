@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack.hpp                                       :+:      :+:    :+:   */
+/*   stack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:07:05 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/13 15:38:06 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/28 10:04:05 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_STACK_HPP
-# define FT_STACK_HPP
+#ifndef STACK_HPP
+# define STACK_HPP
 
-#include "ft_vector.hpp"
+#include "vector.hpp"
 // #include <stack>
 
 namespace ft

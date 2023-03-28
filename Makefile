@@ -6,7 +6,7 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/03/27 21:30:20 by ayassin          ###   ########.fr        #
+#    Updated: 2023/03/28 10:36:42 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 # -fsanitize=address
 
 OBJDIR = obj
 
-HEADERS = ft_vector.hpp
+HEADERS = vector.hpp
 
 _OBJS = $(SRC:.cpp=.o)
 OBJS = $(addprefix $(OBJDIR)/,$(_OBJS))
@@ -34,7 +34,7 @@ $(OBJDIR)/%.o: %.cpp
 
 $(NAME) : $(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-# ./$(NAME)
+	./$(NAME)
 
 clean:
 	rm -f $(OBJS) $(DEP)

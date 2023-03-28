@@ -1,9 +1,7 @@
-#ifndef FT_VECTOR_HPP
-#define FT_VECTOR_HPP
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 
 #include <iostream>
-// #include <vector>
-// #include <algorithm>
 #include <exception>
 #include <iterator>
 
@@ -13,18 +11,7 @@ namespace ft
 	template < class T, class Allocator = std::allocator<T> > 
 	class vector
 	{
-	private:
-		size_t		m_size;
-		size_t		m_capacity;
-		// allocator_traits<allocator_type>	begin;
-		// allocator_traits<allocator_type>	end;
-		T*			m_data;
-		// T*			p_begin;
-		// T*			p_end;
-		// T*			p_end_of_storage;
-		Allocator	myallocator;
-
-	public:
+		public:
 
 		//type defs
 		typedef T											value_type;
@@ -32,11 +19,42 @@ namespace ft
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 		// typedef implementation-defined						iterator;
+		typedef std::iterator<std::random_access_iterator_tag ,value_type>		iterator;
+		typedef std::iterator<std::random_access_iterator_tag, const value_type> const_iterator;
 		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
+		typedef std::reverse_iterator<iterator>				reverse_iterator;
+		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+
+	private:
+		size_t		m_size;
+		size_t		m_capacity;
+		// std::allocator_traits<allocator_type>	m_begin;
+		// std::allocator_traits<allocator_type>	m_end;
+		T*			m_data;
+		T*			m_begin;
+		T*			m_end;
+		// T*			p_end_of_storage;
+		Allocator	myallocator;
+
+	public:
+
+		// //type defs
+		// typedef T											value_type;
+		// typedef Allocator									allocator_type;
+		// typedef typename allocator_type::reference			reference;
+		// typedef typename allocator_type::const_reference	const_reference;
+		// // typedef implementation-defined						iterator;
+		// typedef std::iterator<std::random_access_iterator_tag ,value_type>		iterator;
+		// typedef std::iterator<std::random_access_iterator_tag, const value_type> const_iterator;
+		// // typedef implementation-defined						const_iterator;
+		// typedef typename allocator_type::size_type			size_type;
+		// typedef typename allocator_type::difference_type	difference_type;
+		// typedef typename allocator_type::pointer			pointer;
+		// typedef typename allocator_type::const_pointer		const_pointer;
 		// typedef std::reverse_iterator<iterator>				reverse_iterator;
 		// typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 
@@ -71,13 +89,27 @@ namespace ft
 			if (this != &x)
 			{
 				clear();
-				if (m_capacity != 0)
+				if (m_capacity < x.m_capacity)
+				{
 					myallocator.deallocate(m_data, m_capacity);
-				m_data = myallocator.allocate(x.capacity);
-				for (size_t i; i < x.size; ++i)
+					m_data = myallocator.allocate(x.m_capacity);
+					m_capacity = x.m_capacity;
+				}
+				for (size_t i = 0; i < x.m_size; ++i)
 					myallocator.construct(m_data + i, x[i]);
 			}
-			return (this);
+			m_size = x.m_size;
+			return (*this);
+		}
+
+		// Iterators
+		iterator begin()
+		{
+			return m_data;
+		}
+		const_iterator begin() const
+		{
+			return m_data;
 		}
 
 		// Capacity
@@ -169,6 +201,8 @@ namespace ft
 				temp_allocator.deallocate(m_data, m_capacity);
 			m_data = new_data;
 			m_size = n;
+			m_begin = m_data;
+			m_end = m_data + m_size + 1;
 		}
 
 		void	push_back(const T &val)
@@ -185,6 +219,8 @@ namespace ft
 			}
 			myallocator.construct(m_data + m_size, val);
 			++m_size;
+			// m_begin = m_data;
+			m_end = m_data + m_size + 1;
 		}
 
 
@@ -192,14 +228,25 @@ namespace ft
 		void	pop_back()
 		{
 			myallocator.destroy(m_data + --m_size);
+			// m_begin = m_data;
+			m_end = m_data + m_size + 1;
 		}
 
 		void	clear()
 		{
 			while (m_size)
 				myallocator.destroy( m_data + --m_size );
+			m_begin = m_data;
+			m_end = m_data + m_size + 1;
 		}
 
+		// swap
+		// void	swap(vector& other)
+		// {
+		// 	vector temp = *this;
+		// 	*this = other;
+		// 	other = temp;
+		// }
 		// destructor
 		~vector();
 	};
@@ -214,6 +261,8 @@ namespace ft
 		m_size = 0;
 		myallocator = alloc;
 		m_data = myallocator.allocate(0);
+		m_begin = m_data;
+		m_end = m_data + m_size + 1;
 	}
 
 	template < class T, class Allocator>
@@ -228,6 +277,8 @@ namespace ft
 			myallocator.construct(m_data + m_size, val);
 			++m_size;
 		}
+		m_begin = m_data;
+		m_end = m_data + m_size + 1;
 	}
 
 
@@ -266,6 +317,8 @@ namespace ft
 			myallocator.construct(m_data + m_size, x.m_data[m_size]);
 			++m_size;
 		}
+		m_begin = m_data;
+		m_end = m_data + m_size + 1;
 	}
 
 	template < class T, class Allocator>
