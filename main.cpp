@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/28 13:02:48 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:51:08 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	print_test(s->back() == f->back(), test + "back");
 	print_test(s->front() == f->front(), test + "front");
 	// print_test((s->begin()) == (f->begin()), test + "begin");
-	std::cout << s->begin() << "  " << f->begin() << std::endl;
+	// std::cout << s->begin();// << "  " << f->begin() << std::endl;
 }
 
 template <class T>
@@ -109,6 +109,10 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 		s->push_back(i); f->push_back(i);
 		cmp_vectors(s, f, test0+test1);
 	}
+
+	test1 = "pop_back() ";
+	s->pop_back(); f->pop_back();
+	cmp_vectors(s, f, test0+test1);
 	
 	test1 = "Reserve 10 ";
 	s->reserve(10); f->reserve(10);
@@ -142,7 +146,7 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 		cmp_vectors(s, f, test0+test1);
 	}
 
-	test1 = "assinment 2";
+	test1 = "assinment 2 ";
 	{
 		ft::vector<int>		tempft(400,1110);
 		std::vector<int>	tempstd(400,1110);
@@ -172,11 +176,18 @@ int	main()
 	// 	stda.reserve(300); fta.reserve(300);
 
 	// 	stda.assign(30, 1); fta.assign(30,1);
-	// 	ft::vector<int>		tempft(40,10);
+	// 	{ft::vector<int>		tempft(40,10);
 	// 	std::vector<int>	tempstd(40,10);
-	// 	stda.swap(tempstd); fta.swap(tempft);
-	// 	// stda = tempstd; fta = tempft;
+	// 	// stda.swap(tempstd); fta.swap(tempft);
+	// 	stda = tempstd; fta = tempft;
 	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;
+	// 	}{
+	// 	ft::vector<int>		tempft(401,10);
+	// 	std::vector<int>	tempstd(401,10);
+	// 	// stda.swap(tempstd); fta.swap(tempft);
+	// 	stda = tempstd; fta = tempft;
+	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;
+	// 	}
 	// 	return 0; 
 	// }
 	

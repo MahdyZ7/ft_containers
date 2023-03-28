@@ -18,14 +18,14 @@ namespace ft
 		typedef Allocator									allocator_type;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
+		typedef typename allocator_type::pointer			pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
 		// typedef implementation-defined						iterator;
-		typedef std::iterator<std::random_access_iterator_tag ,value_type>		iterator;
-		typedef std::iterator<std::random_access_iterator_tag, const value_type> const_iterator;
+		typedef std::iterator<pointer, vector>		iterator;
+		typedef std::iterator<const_pointer, vector> const_iterator;
 		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef std::reverse_iterator<iterator>				reverse_iterator;
 		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 
@@ -96,20 +96,30 @@ namespace ft
 					m_capacity = x.m_capacity;
 				}
 				for (size_t i = 0; i < x.m_size; ++i)
+				{
 					myallocator.construct(m_data + i, x[i]);
+					++m_size;
+				}
 			}
-			m_size = x.m_size;
 			return (*this);
 		}
 
 		// Iterators
 		iterator begin()
 		{
-			return m_data;
+			return iterator(m_data, 0);
 		}
 		const_iterator begin() const
 		{
-			return m_data;
+			return const_iterator(m_data, 0); 
+		}
+		iterator end()
+		{
+			return iterator(m_data, m_size + 1);
+		}
+		const_iterator end() const
+		{
+			return const_iterator(m_data, m_size + 1); 
 		}
 
 		// Capacity
@@ -190,19 +200,17 @@ namespace ft
 			Allocator temp_allocator = myallocator;
 			T* new_data = temp_allocator.allocate(n);
 			size_t i = 0;
+			for (size_t c = 0; c < n && c < m_size; ++c)
+				myallocator.destroy(m_data + c);
 			for (; i < n; ++i)
-			{
-				myallocator.destroy(m_data + i);
 				temp_allocator.construct(new_data + i, val);
-			}
 			for (; i < m_size; ++i)
 				temp_allocator.construct(new_data + i, m_data[i]);
 			if (m_data != NULL)
-				temp_allocator.deallocate(m_data, m_capacity);
+				myallocator.deallocate(m_data, m_capacity);
 			m_data = new_data;
 			m_size = n;
-			m_begin = m_data;
-			m_end = m_data + m_size + 1;
+			
 		}
 
 		void	push_back(const T &val)
@@ -219,8 +227,7 @@ namespace ft
 			}
 			myallocator.construct(m_data + m_size, val);
 			++m_size;
-			// m_begin = m_data;
-			m_end = m_data + m_size + 1;
+			// 
 		}
 
 
@@ -228,16 +235,14 @@ namespace ft
 		void	pop_back()
 		{
 			myallocator.destroy(m_data + --m_size);
-			// m_begin = m_data;
-			m_end = m_data + m_size + 1;
+			// 
 		}
 
 		void	clear()
 		{
 			while (m_size)
 				myallocator.destroy( m_data + --m_size );
-			m_begin = m_data;
-			m_end = m_data + m_size + 1;
+			
 		}
 
 		// swap
