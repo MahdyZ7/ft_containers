@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/28 14:51:08 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/03/29 12:03:16 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,29 @@ void 	print_test(bool x, std::string str)
 template <class T>
 void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 {
+	// std::cout << test << std::endl;
+	// std::cout << "size std: " << s->size() << " ft: " << f->size() << std::endl;
 	print_test(s->size() == f->size(), test + "size");
+	// std::cout << "capacity std: " << s->capacity() << " ft: " << f->capacity() << std::endl;
 	print_test(s->capacity() == f->capacity(), test + "capacity");
+	// std::cout << "max_size std: " << s->max_size() << " ft: " << f->max_size() << std::endl;
 	print_test(s->max_size() == f->max_size(), test + "max_size");
 	print_test(s->empty() == f->empty(), test + "empty");
 	for (size_t i = 0; i < f->size(); ++i)
 	{
+		// if ((*s)[i] != (*f)[i])
+		{
+			// std::cout << "Element at [" << i << "] -> std: " <<
+				// (*s)[i] << 	" ft: " << (*f)[i] << std::endl;  
+		}
 		print_test((*s)[i] == (*f)[i], test + " [] operator");
 		print_test(s->at(i) == f->at(i), test + " at()");
 	}
 	if (s->size() == 0)
 		return ;
+	// std::cout << "back std: " << s->back() << " ft: " << f->back() << std::endl;
 	print_test(s->back() == f->back(), test + "back");
+	// std::cout << "front std: " << s->front() << " ft: " << f->front() << std::endl;
 	print_test(s->front() == f->front(), test + "front");
 	// print_test((s->begin()) == (f->begin()), test + "begin");
 	// std::cout << s->begin();// << "  " << f->begin() << std::endl;
@@ -126,6 +137,14 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 	s->reserve(11); f->reserve(11);
 	cmp_vectors(s, f, test0+test1);
 
+	test1 = "assign 0 ";
+	s->assign(0, 0); f->assign(0, 0);
+	cmp_vectors(s, f, test0+test1);
+
+	test1 = "assign 10 -10";
+	s->assign(10,-10); f->assign(10, -10);
+	cmp_vectors(s, f, test0+test1);
+	
 	test1 = "Clear full Vector ";
 	s->clear(); f->clear();
 	cmp_vectors(s, f, test0+test1);
@@ -134,7 +153,7 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 	s->reserve(100); f->reserve(100);
 	cmp_vectors(s, f, test0+test1);
 
-	test1 = "assign 30 11 ";
+	test1 = "assign 300 11 ";
 	s->assign(300,11); f->assign(300, 11);
 	cmp_vectors(s, f, test0+test1);
 
@@ -151,6 +170,14 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 		ft::vector<int>		tempft(400,1110);
 		std::vector<int>	tempstd(400,1110);
 		*s = tempstd; *f = tempft;
+		*s = tempstd; *f = tempft;
+		cmp_vectors(s, f, test0+test1);
+	}
+
+	test1 = "push_back alot 1";
+	for (int i = 1; i < 2333; ++i)
+	{
+		s->push_back(i); f->push_back(i);
 		cmp_vectors(s, f, test0+test1);
 	}
 	
@@ -180,8 +207,10 @@ int	main()
 	// 	std::vector<int>	tempstd(40,10);
 	// 	// stda.swap(tempstd); fta.swap(tempft);
 	// 	stda = tempstd; fta = tempft;
-	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;
-	// 	}{
+	// 	cmp_vectors( &stda, &fta, "small test: ");
+	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;		
+	// 	}
+	// 	{
 	// 	ft::vector<int>		tempft(401,10);
 	// 	std::vector<int>	tempstd(401,10);
 	// 	// stda.swap(tempstd); fta.swap(tempft);
