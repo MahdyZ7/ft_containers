@@ -1,5 +1,5 @@
-compile = "make"
-run = "./ft_container"
+compile = "make replit"
+run = "./ft_containers"
 hidden = ["main", "**/*.o", "**/*.d", ".ccls-cache", "Makefile"]
 
 [nix]

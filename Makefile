@@ -36,6 +36,9 @@ $(NAME) : $(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	./$(NAME)
 
+replit: $(OBJS) $(HEADERS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
 clean:
 	rm -f $(OBJS) $(DEP)
 
