@@ -105,9 +105,10 @@ namespace ft
 		}
 
 		// Iterators
-		iterator begin()
+		std::iterator<T, Allocator> begin()
 		{
-			return iterator(m_data, 0);
+			return m_data;std::iterator<T, Allocator>(m_data, 0);
+			// return iterator(this->_M_impl._M_start)
 		}
 		const_iterator begin() const
 		{
@@ -197,20 +198,32 @@ namespace ft
 
 		void assign (size_t n, const T& val)
 		{
-			Allocator temp_allocator = myallocator;
-			T* new_data = temp_allocator.allocate(n);
-			size_t i = 0;
-			for (size_t c = 0; c < n && c < m_size; ++c)
-				myallocator.destroy(m_data + c);
-			for (; i < n; ++i)
-				temp_allocator.construct(new_data + i, val);
-			for (; i < m_size; ++i)
-				temp_allocator.construct(new_data + i, m_data[i]);
-			if (m_data != NULL)
-				myallocator.deallocate(m_data, m_capacity);
-			m_data = new_data;
-			m_size = n;
-			
+			if (n <= m_capacity)
+			{
+				for (size_t i = 0; i < n; ++i)
+				{
+					if ( i < m_size)
+						myallocator.destroy(m_data + i);
+					myallocator.construct(m_data + i, val);
+				}
+				m_size = n;
+			}
+			else
+			{
+				Allocator temp_allocator = myallocator;
+				T* new_data = temp_allocator.allocate(n);
+				for (size_t i = 0; i < n; ++i)
+				{
+					if (i < m_size)
+						myallocator.destroy(m_data + i);
+					temp_allocator.construct(new_data + i, val);
+				}
+				if (m_data != NULL)
+					myallocator.deallocate(m_data, m_capacity);
+				m_data = new_data;
+				m_size = n;
+				m_capacity = n;
+			}
 		}
 
 		void	push_back(const T &val)
