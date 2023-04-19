@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 # -fsanitize=address
 
 OBJDIR = obj
 
-HEADERS = vector.hpp
+HEADERS = vector.hpp Iterators.hpp ConstantIterators.hpp
 
 _OBJS = $(SRC:.cpp=.o)
 OBJS = $(addprefix $(OBJDIR)/,$(_OBJS))

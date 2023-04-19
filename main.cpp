@@ -96,8 +96,14 @@ void	cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test)
 	print_test(s->back() == f->back(), test + "back");
 	// std::cout << "front std: " << s->front() << " ft: " << f->front() << std::endl;
 	print_test(s->front() == f->front(), test + "front");
-	// print_test((s->begin()) == (f->begin()), test + "begin");
-	// std::cout << s->begin();// << "  " << f->begin() << std::endl;
+	std::vector<int>::iterator sit = s->begin();
+	std::vector<int>::const_iterator c_sit = s->begin();
+	ft::vector<int>::iterator fit = f->begin();
+	ft::vector<int>::const_iterator c_fit = f->begin();
+	print_test(*(s->begin()) == *(f->begin()), test + "begin");
+	print_test(*sit == *(fit), test + "begin 2");	
+	print_test(*c_sit == *(c_fit), test + "begin const");
+	// std::cout << *(s->begin()) << "  " << *(f->begin()) << std::endl;
 }
 
 template <class T>
@@ -180,7 +186,7 @@ void	repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0)
 		s->push_back(i); f->push_back(i);
 		cmp_vectors(s, f, test0+test1);
 	}
-	
+
 	// test1 = "swap ";
 	// {
 	// 	ft::vector<int>		tempft(40,10);
@@ -197,27 +203,13 @@ int	main()
 {
 
 	// {
-	// 	std::vector<int> stda;
-	// 	ft::vector<int> fta;
-
-	// 	stda.reserve(300); fta.reserve(300);
-
-	// 	stda.assign(30, 1); fta.assign(30,1);
-	// 	{ft::vector<int>		tempft(40,10);
-	// 	std::vector<int>	tempstd(40,10);
-	// 	// stda.swap(tempstd); fta.swap(tempft);
-	// 	stda = tempstd; fta = tempft;
-	// 	cmp_vectors( &stda, &fta, "small test: ");
-	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;		
-	// 	}
-	// 	{
-	// 	ft::vector<int>		tempft(401,10);
-	// 	std::vector<int>	tempstd(401,10);
-	// 	// stda.swap(tempstd); fta.swap(tempft);
-	// 	stda = tempstd; fta = tempft;
-	// 	std::cout << stda.capacity() << " vs " << fta.capacity() << std::endl;
-	// 	}
-	// 	return 0; 
+	// 	std::vector<int> vec(30, 10);
+	//     std::vector<int>::const_iterator it;
+	//     std::cout << "Printing vector using a constant iterator" << std::endl;
+	//     for(it = vec.begin(); it != vec.end(); ++it) {
+	//         std::cout << *it << "\n";
+	//     }
+	//     return 0;
 	// }
 	
 	try 

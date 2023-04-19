@@ -3,17 +3,58 @@
 
 #include <iostream>
 #include <exception>
-#include <iterator>
+// #include <iterator>
+#include "Iterators.hpp"
+#include "ConstantIterators.hpp"
+
 
 namespace ft
 {
-	
 	template < class T, class Allocator = std::allocator<T> > 
 	class vector
 	{
 		public:
 
+		// class iterator {
+		// 	public:
+		// 		typedef T value_type;
+		// 		typedef std::ptrdiff_t difference_type;
+		// 		typedef T* pointer;
+		// 		typedef T& reference;
+		// 		typedef std::random_access_iterator_tag iterator_category;
+				
+		// 		iterator(pointer ptr = NULL) : m_ptr(ptr) {}
+		// 		iterator(const iterator& other) : m_ptr(other.m_ptr) {}
+		// 		iterator& operator=(const iterator& other) { m_ptr = other.m_ptr; return *this; }
+		// 		iterator& operator++() { ++m_ptr; return *this; }
+		// 		iterator operator++(int) { iterator temp(*this); ++m_ptr; return temp; }
+		// 		iterator& operator--() { --m_ptr; return *this; }
+		// 		iterator operator--(int) { iterator temp(*this); --m_ptr; return temp; }
+		// 		iterator operator+(difference_type n) const { return iterator(m_ptr + n); }
+		// 		iterator operator-(difference_type n) const { return iterator(m_ptr - n); }
+		// 		difference_type operator-(const iterator& other) const { return m_ptr - other.m_ptr; }
+		// 		iterator& operator+=(difference_type n) { m_ptr += n; return *this; }
+		// 		iterator& operator-=(difference_type n) { m_ptr -= n; return *this; }
+		// 		bool operator==(const iterator& other) const { return m_ptr == other.m_ptr; }
+		// 		bool operator!=(const iterator& other) const { return m_ptr != other.m_ptr; }
+		// 		bool operator<(const iterator& other) const { return m_ptr < other.m_ptr; }
+		// 		bool operator<=(const iterator& other) const { return m_ptr <= other.m_ptr; }
+		// 		bool operator>(const iterator& other) const { return m_ptr > other.m_ptr; }
+		// 		bool operator>=(const iterator& other) const { return m_ptr >= other.m_ptr; }
+		// 		reference operator*() const { return *m_ptr; }
+		// 		pointer operator->() const { return m_ptr; }
+		// 		reference operator[](difference_type n) const { return *(m_ptr + n); }
+			
+		// 	private:
+		// 		pointer m_ptr;
+		// };
+
+
+		public:
+
 		//type defs
+		// iterator<T> m_iterator();
+		// const_iterator<T> m_const_iterator();
 		typedef T											value_type;
 		typedef Allocator									allocator_type;
 		typedef typename allocator_type::reference			reference;
@@ -21,13 +62,14 @@ namespace ft
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		// typedef implementation-defined						iterator;
-		typedef std::iterator<pointer, vector>		iterator;
-		typedef std::iterator<const_pointer, vector> const_iterator;
+		typedef ft::iterator<T>		iterator;
+		typedef ft::const_iterator<T>		const_iterator;
+		// typedef std::iterator<const_pointer, vector> const_iterator;
 		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
-		typedef std::reverse_iterator<iterator>				reverse_iterator;
-		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		// typedef std::reverse_iterator<iterator>				reverse_iterator;
+		// typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 	private:
 		size_t		m_size;
@@ -105,22 +147,22 @@ namespace ft
 		}
 
 		// Iterators
-		std::iterator<T, Allocator> begin()
+		iterator begin()
 		{
-			return m_data;std::iterator<T, Allocator>(m_data, 0);
-			// return iterator(this->_M_impl._M_start)
+			// return m_data;std::iterator<T, Allocator>(m_data, 0);
+			return iterator(m_data);
 		}
 		const_iterator begin() const
 		{
-			return const_iterator(m_data, 0); 
+			return const_iterator (m_data); 
 		}
 		iterator end()
 		{
-			return iterator(m_data, m_size + 1);
+			return iterator(m_data, m_size);
 		}
 		const_iterator end() const
 		{
-			return const_iterator(m_data, m_size + 1); 
+			return const_iterator(m_data, m_size); 
 		}
 
 		// Capacity
