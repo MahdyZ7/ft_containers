@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <exception>
-// #include <iterator>
+#include <iterator>
+# include <type_traits>
 #include "Iterators.hpp"
+#include "reverse_iterator.hpp"
 #include "ConstantIterators.hpp"
 
 
@@ -13,41 +15,6 @@ namespace ft
 	template < class T, class Allocator = std::allocator<T> > 
 	class vector
 	{
-		public:
-
-		// class iterator {
-		// 	public:
-		// 		typedef T value_type;
-		// 		typedef std::ptrdiff_t difference_type;
-		// 		typedef T* pointer;
-		// 		typedef T& reference;
-		// 		typedef std::random_access_iterator_tag iterator_category;
-				
-		// 		iterator(pointer ptr = NULL) : m_ptr(ptr) {}
-		// 		iterator(const iterator& other) : m_ptr(other.m_ptr) {}
-		// 		iterator& operator=(const iterator& other) { m_ptr = other.m_ptr; return *this; }
-		// 		iterator& operator++() { ++m_ptr; return *this; }
-		// 		iterator operator++(int) { iterator temp(*this); ++m_ptr; return temp; }
-		// 		iterator& operator--() { --m_ptr; return *this; }
-		// 		iterator operator--(int) { iterator temp(*this); --m_ptr; return temp; }
-		// 		iterator operator+(difference_type n) const { return iterator(m_ptr + n); }
-		// 		iterator operator-(difference_type n) const { return iterator(m_ptr - n); }
-		// 		difference_type operator-(const iterator& other) const { return m_ptr - other.m_ptr; }
-		// 		iterator& operator+=(difference_type n) { m_ptr += n; return *this; }
-		// 		iterator& operator-=(difference_type n) { m_ptr -= n; return *this; }
-		// 		bool operator==(const iterator& other) const { return m_ptr == other.m_ptr; }
-		// 		bool operator!=(const iterator& other) const { return m_ptr != other.m_ptr; }
-		// 		bool operator<(const iterator& other) const { return m_ptr < other.m_ptr; }
-		// 		bool operator<=(const iterator& other) const { return m_ptr <= other.m_ptr; }
-		// 		bool operator>(const iterator& other) const { return m_ptr > other.m_ptr; }
-		// 		bool operator>=(const iterator& other) const { return m_ptr >= other.m_ptr; }
-		// 		reference operator*() const { return *m_ptr; }
-		// 		pointer operator->() const { return m_ptr; }
-		// 		reference operator[](difference_type n) const { return *(m_ptr + n); }
-			
-		// 	private:
-		// 		pointer m_ptr;
-		// };
 
 
 		public:
@@ -63,13 +30,16 @@ namespace ft
 		typedef typename allocator_type::const_pointer		const_pointer;
 		// typedef implementation-defined						iterator;
 		typedef ft::iterator<T>		iterator;
+		// typedef ft::iterator<T>		iterator;
 		typedef ft::const_iterator<T>		const_iterator;
+		// typedef ft::iterator<const T>		const_iterator;
+
 		// typedef std::iterator<const_pointer, vector> const_iterator;
 		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
-		// typedef std::reverse_iterator<iterator>				reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 	private:
 		size_t		m_size;
@@ -104,8 +74,9 @@ namespace ft
 		// constructors;
 		explicit vector (const Allocator& alloc = Allocator());
 		explicit vector (size_t n, const T& val = T(), const Allocator& alloc = Allocator());
-		// template <class InputIterator>
-		// vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator());
+  template <class InputIterator>
+		vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator(), typename std::enable_if<std::is_base_of<std::input_iterator_tag,
+                                                  typename std::iterator_traits<InputIterator>::iterator_category>::value>::type* = 0);
 		vector (const vector& x);
 		// template <class InputIterator>
 		// vector(InputIterator first,
@@ -163,6 +134,24 @@ namespace ft
 		const_iterator end() const
 		{
 			return const_iterator(m_data, m_size); 
+		}
+
+// Iterators
+		reverse_iterator rbegin()
+		{
+			return reverse_iterator((end()));
+		}
+		const_iterator rbegin() const
+		{
+			return const_iterator (end()); 
+		}
+		reverse_iterator rend()
+		{
+			return reverse_iterator(begin());
+		}
+		const_iterator rend() const
+		{
+			return const_iterator(begin()); 
 		}
 
 		// Capacity
@@ -236,7 +225,41 @@ namespace ft
 		
 		//modifiers
 
-		// template <class InputIterator>  void assign (InputIterator first, InputIterator last); // to be done later
+		// template <class InputIterator>
+		template <class InputIterator>
+		typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
+		assign (InputIterator first, InputIterator last)
+		{
+			size_t n = last - first;
+			if (n <= m_capacity)
+			{
+				for (size_t i = 0; i < n; ++i)
+				{
+					if ( i < m_size)
+						myallocator.destroy(m_data + i);
+					myallocator.construct(m_data + i, *first);
+					++first;
+				}
+				m_size = n;
+			}
+			else
+			{
+				Allocator temp_allocator = myallocator;
+				T* new_data = temp_allocator.allocate(n);
+				for (size_t i = 0; i < n; ++i)
+				{
+					if (i < m_size)
+						myallocator.destroy(m_data + i);
+					temp_allocator.construct(new_data + i, *first);
+					++first;
+				}
+				if (m_data != NULL)
+					myallocator.deallocate(m_data, m_capacity);
+				m_data = new_data;
+				m_size = n;
+				m_capacity = n;
+			}
+		}
 
 		void assign (size_t n, const T& val)
 		{
@@ -342,27 +365,21 @@ namespace ft
 	}
 
 
-	// template < class T, class Allocator>
-	// template <class InputIterator>
-	// 	vector(InputIterator first,
-    //         	typename std::enable_if<is_iterator  <InputIterator>::value &&
-	// 			std::is_constructible<
-    //                                 value_type,
-    //                                 typename std::iterator_traits<InputIterator>::reference>::value,
-    //                              InputIterator>::type last, const Allocator& alloc = Allocator())
-	// template < class T, class Allocator>
-	// template <class InputIterator>
-	// ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc)
-	// {
-	// 	m_capacity = std::distance(first, last); // to be checked
-	// 	myallocator = alloc;
-	// 	m_data = myallocator.allocate(m_capacity); // to be checked
-	// 	for (typename T::iterator it = first; it != last; ++it)
-	// 	{
-	// 		myallocator.construct(m_data + m_size, *it);
-	// 		++m_size;
-	// 	}
-	// }
+	template < class T, class Allocator>
+	  template <class InputIterator>
+	ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc, typename std::enable_if<std::is_base_of<std::input_iterator_tag,
+                                                  typename std::iterator_traits<InputIterator>::iterator_category>::value>::type*)
+	{
+		m_capacity = last - first; // to be checked
+		myallocator = alloc;
+		m_size = 0;
+		m_data = myallocator.allocate(m_capacity); // to be checked
+		for (iterator it = first; it != last; ++it)
+		{
+			myallocator.construct(m_data + m_size, *it);
+			++m_size;
+		}
+	}
 
 	template < class T, class Allocator>
 	ft::vector<T, Allocator>::vector(const vector& x)
@@ -394,16 +411,4 @@ namespace ft
 
 }
 
-	
-//  template <typename U = T>
-    // typename std::enable_if<std::is_same<U, T>::value && std::is_same<U&, decltype(*data_)>::value, U&>::type
-//     front() {
-//         return data_[0];
-//     }
-
-    // template <typename U = T>
-    // typename std::enable_if<std::is_same<U, T>::value && std::is_same<const U&, decltype(*data_)>::value, const U&>::type
-//     front() const {
-//         return data_[0];
-//     }
 #endif
