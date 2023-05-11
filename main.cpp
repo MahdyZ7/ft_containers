@@ -23,11 +23,12 @@
 // {
 // 	{
 // 		std::deque<int> myVector (3,100);          // deque with 3
-// elements 		std::vector<int> myvector (2,200);        // vector with 2 elements
+// elements 		std::vector<int> myvector (2,200);        // vector with
+// 2 elements
 
 // 		std::stack<int> first;                    // empty stack
-// 		std::stack<int> second (myVector);         // stack initialized to
-// copy of deque
+// 		std::stack<int> second (myVector);         // stack initialized
+// to copy of deque
 
 // 		std::stack<int,std::vector<int> > third;  // empty stack using
 // vector 		std::stack<int,std::vector<int> > fourth (myvector);
@@ -39,11 +40,12 @@
 // 	}
 // 	{
 // 		// std::vector<int> myVector (3,100);          // deque with 3
-// elements 		std::vector<int> myvector (2,200);        // vector with 2 elements
+// elements 		std::vector<int> myvector (2,200);        // vector with
+// 2 elements
 
 // 		ft::stack<int> first;                    // empty stack
-// 		// ft::stack<int> second (myVector);         // stack initialized
-// to copy of deque
+// 		// ft::stack<int> second (myVector);         // stack
+// initialized to copy of deque
 
 // 		ft::stack<int,std::vector<int> > third;  // empty stack using
 // vector 		ft::stack<int,std::vector<int> > fourth (myvector);
@@ -95,15 +97,17 @@ void cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test) {
   }
   if (s->size() == 0)
     return;
-  // std::cout << "back std: " << s->back() << " ft: " << f->back() << std::endl;
+  // std::cout << "back std: " << s->back() << " ft: " << f->back() <<
+  // std::endl;
   print_test(s->back() == f->back(), test + "back");
   // std::cout << "front std: " << s->front() << " ft: " << f->front() <<
   // std::endl;
   print_test(s->front() == f->front(), test + "front");
   print_test(*(s->begin()) == *(f->begin()), test + "begin");
   print_test(*(s->rbegin()) == *(f->rbegin()), test + "rbegin");
-  // std::cout << test << " rend std: " << *(s->rend()) << " ft: " << *(f->rend()) << std::endl;
-  // std::cout << test << " rend-1 std: " << (*(s->rend() - 1)) << " ft: " << *(f->rend() - 1) << std::endl;
+  // std::cout << test << " rend std: " << *(s->rend()) << " ft: " <<
+  // *(f->rend()) << std::endl; std::cout << test << " rend-1 std: " <<
+  // (*(s->rend() - 1)) << " ft: " << *(f->rend() - 1) << std::endl;
   print_test(*(s->end() - 1) == *(f->end() - 1), test + "end");
   print_test(*(s->rend()) == *(f->rend()), test + "rend");
   std::vector<int>::reverse_iterator sit = s->rbegin();
@@ -111,11 +115,14 @@ void cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test) {
   ft::vector<int>::reverse_iterator fit = f->rbegin();
   // ft::vector<int>::const_iterator c_fit = f->begin();
   print_test(*sit == *(fit), test + "begin 2");
-  std::cout << test << " base std: " << (*sit.base()) << " ft: " << (*fit.base()) << std::endl;
-  std::cout << test << " base std: " << (*(sit.base() - 1)) << " ft: " << (*(fit.base() - 1)) << std::endl;
-  print_test(*(sit.base() + 1) == *(fit.base() + 1), test + "base");
+  // std::cout << test << " base std: " << (*sit.base()) << " ft: " << (*fit.base()) << std::endl;
+  // std::cout << test << " base std: " << (*(sit.base() - 2)) << " ft: " << (*(fit.base() - 2)) << std::endl;
+  print_test(*(sit.base() - 1) == *(fit.base() - 1), test + "base");
+  print_test(*(sit.base() - 2) == *(fit.base() - 2), test + "base");
+
   // print_test(*c_sit == *(c_fit), test + "begin const");
   // std::cout << *(s->begin()) << "  " << *(f->begin()) << std::endl;
+	// std::cout << "\033[0;32m" << test << ":	✅" << std::endl;
 }
 
 template <class T>
@@ -133,6 +140,16 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
   f->push_back(11);
   cmp_vectors(s, f, test0 + test1);
 
+	test1 = "insert";
+	s->insert(s->begin(), 12);
+	f->insert(f->begin(), 12);
+	cmp_vectors(s, f, test0 + test1);
+
+	test1 = "insert(end)";
+	s->insert(s->end(), 13);
+	f->insert(f->end(), 13);
+	cmp_vectors(s, f, test0 + test1);
+	
   test1 = "push_back alot ";
   for (int i = 0; i < 100; ++i) {
     s->push_back(i);
@@ -294,7 +311,28 @@ int main() {
     std::vector<int> stda_size2(70, 90);
     ft::vector<int> fta_size2(70, 90);
 
-    repetative_talk(&stda_size2, &fta_size2, test0);
+	repetative_talk(&stda_size2, &fta_size2, test0);
+
+	test0 = "iteraotr constructor";
+	  std::vector<int> stda_temp;
+	  ft::vector<int> fta_temp;
+	  for (int i = 0; i < 100; ++i) {
+		  stda_temp.push_back(i);
+		  fta_temp.push_back(i);
+	  }
+	  std::vector<int>::iterator it = stda_temp.begin();
+	  ft::vector<int>::iterator it2 = fta_temp.begin();
+	  it += 5;
+	  it2 += 5;
+	  std::vector<int> std_itr(it, it + 13);
+	  ft::vector<int> fta_itr(it2, it2 + 13);
+	  repetative_talk(&std_itr, &fta_itr, test0);
+
+	  // test0 = "invalid constructor";
+	  // std::vector<int> std_itr1(it, it+1000);
+	  // ft::vector<int> fta_itr1(it2, it2+1000);
+	  // repetative_talk(&std_itr1, &fta_itr1, test0);
+	  
     std::cout << "done\n";
   } catch (std::runtime_error &e) {
     std::cout << "Error: " << e.what() << std::endl;

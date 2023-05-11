@@ -173,7 +173,7 @@ namespace ft
 			if (new_cap > m_capacity) 
 			{
 				Allocator temp_allocator = myallocator;
-				T* new_data = temp_allocator.allocate(new_cap);
+				T* new_data = temp_allocatorsian .allocate(new_cap);
 				for (size_t i = 0; i < m_size; ++i)
 				{
 					temp_allocator.construct(&new_data[i], m_data[i]);
@@ -314,6 +314,33 @@ namespace ft
 		{
 			myallocator.destroy(m_data + --m_size);
 			// 
+		}
+
+		iterator insert (iterator position, const value_type& val)
+		{
+			T temp_add = val, temp_destroy;
+			typename iterator::difference_type n = position - begin();
+
+			if (position >= end())
+			{
+				push_back(val);
+				return (end());
+			}
+			// if (m_capacity == m_size)
+			// {
+				temp_add = *position;
+				myallocator.destroy(&(*position));
+				myallocator.construct(&(*position), val);
+				for (iterator it = position + 1; it < end() - 1; ++it)
+				{
+					temp_destroy = *it;
+					myallocator.destroy(&*it);
+					myallocator.construct(&*it, temp_add);
+					temp_add = temp_destroy;
+				}
+			push_back(temp_add);
+			// }
+			return begin() + n;
 		}
 
 		void	clear()
