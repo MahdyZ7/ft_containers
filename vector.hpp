@@ -173,7 +173,7 @@ namespace ft
 			if (new_cap > m_capacity) 
 			{
 				Allocator temp_allocator = myallocator;
-				T* new_data = temp_allocatorsian .allocate(new_cap);
+				T* new_data = temp_allocator.allocate(new_cap);
 				for (size_t i = 0; i < m_size; ++i)
 				{
 					temp_allocator.construct(&new_data[i], m_data[i]);
@@ -324,22 +324,19 @@ namespace ft
 			if (position >= end())
 			{
 				push_back(val);
-				return (end());
+				return (--end());
 			}
-			// if (m_capacity == m_size)
-			// {
-				temp_add = *position;
-				myallocator.destroy(&(*position));
-				myallocator.construct(&(*position), val);
-				for (iterator it = position + 1; it < end() - 1; ++it)
-				{
-					temp_destroy = *it;
-					myallocator.destroy(&*it);
-					myallocator.construct(&*it, temp_add);
-					temp_add = temp_destroy;
-				}
+			temp_add = *position;
+			myallocator.destroy(&(*position));
+			myallocator.construct(&(*position), val);
+			for (iterator it = position + 1; it < end() - 1; ++it)
+			{
+				temp_destroy = *it;
+				myallocator.destroy(&*it);
+				myallocator.construct(&*it, temp_add);
+				temp_add = temp_destroy;
+			}
 			push_back(temp_add);
-			// }
 			return begin() + n;
 		}
 
@@ -381,6 +378,7 @@ namespace ft
 		m_size = 0;
 		m_capacity = n; // to be checked
 		myallocator = alloc;
+		// if (m_capacity)
 		m_data = myallocator.allocate(m_capacity); // to be checked
 		while (m_size < m_capacity)
 		{
@@ -432,7 +430,7 @@ namespace ft
 		{
 			myallocator.destroy(m_data + i);
 		}
-		if (m_capacity)
+		// if (m_capacity)
 			myallocator.deallocate(m_data, m_capacity);
 	}
 

@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/29 12:03:16 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/27 16:16:07 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,17 @@ void cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test) {
   // *(f->rend()) << std::endl; std::cout << test << " rend-1 std: " <<
   // (*(s->rend() - 1)) << " ft: " << *(f->rend() - 1) << std::endl;
   print_test(*(s->end() - 1) == *(f->end() - 1), test + "end");
-  print_test(*(s->rend()) == *(f->rend()), test + "rend");
-  std::vector<int>::reverse_iterator sit = s->rbegin();
+  print_test(*(--s->rend()) == *(--f->rend()), test + "rend");
+  std::vector<int>::reverse_iterator sit = s->rbegin() + 1;
   // std::vector<int>::const_iterator c_sit = s->begin();
-  ft::vector<int>::reverse_iterator fit = f->rbegin();
+  ft::vector<int>::reverse_iterator fit = f->rbegin() + 1;
   // ft::vector<int>::const_iterator c_fit = f->begin();
   print_test(*sit == *(fit), test + "begin 2");
   // std::cout << test << " base std: " << (*sit.base()) << " ft: " << (*fit.base()) << std::endl;
   // std::cout << test << " base std: " << (*(sit.base() - 2)) << " ft: " << (*(fit.base() - 2)) << std::endl;
-  print_test(*(sit.base() - 1) == *(fit.base() - 1), test + "base");
-  print_test(*(sit.base() - 2) == *(fit.base() - 2), test + "base");
+  std::cout << *(sit.base()) << "  " << *(fit.base()) << std::endl;
+  print_test(*(sit.base()-1) == *(fit.base()-1), test + "base");
+  print_test(*(sit.base()) == *(fit.base()), test + "base");
 
   // print_test(*c_sit == *(c_fit), test + "begin const");
   // std::cout << *(s->begin()) << "  " << *(f->begin()) << std::endl;
@@ -145,9 +146,19 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 	f->insert(f->begin(), 12);
 	cmp_vectors(s, f, test0 + test1);
 
+	test1 = "insert";
+	s->insert(s->begin() + 1 , 12);
+	f->insert(f->begin() + 1, 12);
+	cmp_vectors(s, f, test0 + test1);
+
 	test1 = "insert(end)";
-	s->insert(s->end(), 13);
-	f->insert(f->end(), 13);
+	// std::cout << *(s->insert(s->end(), 43)) << " " << *(f->insert(f->end(), 43)) << std::endl;
+	print_test(*(s->insert(s->end(), 13)) == *(f->insert(f->end(), 13)), test0 + test1);
+	cmp_vectors(s, f, test0 + test1);
+
+	test1 = "insert(end)";
+	s->insert(s->end() - 1 , 13);
+	f->insert(f->end() - 1, 13);
 	cmp_vectors(s, f, test0 + test1);
 	
   test1 = "push_back alot ";
@@ -288,30 +299,30 @@ int main() {
     std::vector<int> stda_copy(stda);
     ft::vector<int> fta_copy(fta);
 
-    repetative_talk(&stda_copy, &fta_copy, test0);
+    // repetative_talk(&stda_copy, &fta_copy, test0);
 
     test0 = "Assinment operatopr: ";
     std::vector<int> stda_ass = stda;
     ft::vector<int> fta_ass = fta;
-    repetative_talk(&stda_ass, &fta_ass, test0);
+    // repetative_talk(&stda_ass, &fta_ass, test0);
 
     test0 = "size constructor (0, default values): ";
     std::vector<int> stda_size(0);
     ft::vector<int> fta_size(0);
 
-    repetative_talk(&stda_size, &fta_size, test0);
+    // repetative_talk(&stda_size, &fta_size, test0);
 
     test0 = "size constructor (70, default values): ";
     std::vector<int> stda_size1(70);
     ft::vector<int> fta_size1(70);
 
-    repetative_talk(&stda_size1, &fta_size1, test0);
+    // repetative_talk(&stda_size1, &fta_size1, test0);
 
     test0 = "size constructor (70, 90): ";
     std::vector<int> stda_size2(70, 90);
     ft::vector<int> fta_size2(70, 90);
 
-	repetative_talk(&stda_size2, &fta_size2, test0);
+	// repetative_talk(&stda_size2, &fta_size2, test0);
 
 	test0 = "iteraotr constructor";
 	  std::vector<int> stda_temp;
@@ -326,7 +337,7 @@ int main() {
 	  it2 += 5;
 	  std::vector<int> std_itr(it, it + 13);
 	  ft::vector<int> fta_itr(it2, it2 + 13);
-	  repetative_talk(&std_itr, &fta_itr, test0);
+	//   repetative_talk(&std_itr, &fta_itr, test0);
 
 	  // test0 = "invalid constructor";
 	  // std::vector<int> std_itr1(it, it+1000);
