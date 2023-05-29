@@ -319,13 +319,39 @@ namespace ft
 		iterator insert (iterator position, const value_type& val)
 		{
 			T temp_add = val, temp_destroy;
-			typename iterator::difference_type n = position - begin();
+			typename iterator::difference_type n = std::distance(position, begin());
 
 			if (position >= end())
 			{
 				push_back(val);
 				return (--end());
 			}
+			temp_add = *position;
+			myallocator.destroy(&(*position));
+			myallocator.construct(&(*position), val);
+			for (iterator it = position + 1; it < end() - 1; ++it)
+			{
+				temp_destroy = *it;
+				myallocator.destroy(&*it);
+				myallocator.construct(&*it, temp_add);
+				temp_add = temp_destroy;
+			}
+			push_back(temp_add);
+			return begin() + n;
+		}
+
+		iterator insert (iterator position, size_type n, const value_type& val)
+		{
+			typename iterator::difference_type diff = position - begin();
+
+			if (position >= end())
+			{
+				for (int i = 0; i < n; ++i)
+					push_back(val);
+				return (--end());
+			}
+
+			T* temp_add = myallocator.allocate(position - end());
 			temp_add = *position;
 			myallocator.destroy(&(*position));
 			myallocator.construct(&(*position), val);
@@ -427,11 +453,8 @@ namespace ft
 	ft::vector<T, Allocator>::~vector()
 	{
 		for (size_t i = 0; i < m_size; ++i)
-		{
 			myallocator.destroy(m_data + i);
-		}
-		// if (m_capacity)
-			myallocator.deallocate(m_data, m_capacity);
+		myallocator.deallocate(m_data, m_capacity);
 	}
 
 }
