@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/28 13:22:34 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/29 22:14:34 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,11 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 	test1 = "insert";
 	s->insert(s->begin(), 12);
 	f->insert(f->begin(), 12);
+	cmp_vectors(s, f, test0 + test1);
+
+	test1 = "insert n";
+	s->insert(s->begin(), 50, 12);
+	f->insert(f->begin(), 50, 12);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert";

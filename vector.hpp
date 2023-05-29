@@ -344,26 +344,45 @@ namespace ft
 		{
 			typename iterator::difference_type diff = position - begin();
 
+			if (n == 0)
+				return position; // check for position > end()
+			if ( m_size + n > m_capacity)
+			{
+				Allocator temp_allocator = myallocator;
+				T* new_data = temp_allocator.allocate(m_size + n);
+				for (typename iterator::difference_type i = 0; i < diff; ++i)
+				{
+					temp_allocator.construct(&new_data[i], m_data[i]);
+					temp_allocator.destroy(&m_data[i]);
+				}
+				for (size_t i = 0; i < n; ++i)
+					temp_allocator.construct(&new_data[diff + i], val);
+				for (size_t i = diff; i < m_size; ++i)
+				{
+					temp_allocator.construct(&new_data[i + n], m_data[i]);
+					temp_allocator.destroy(&m_data[i]);
+				}
+				if (m_data != NULL)
+					temp_allocator.deallocate(m_data, m_capacity);
+				m_data = new_data;
+				m_capacity = m_size + n;
+				m_size = m_size + n;
+				return (begin() + diff);
+			}
 			if (position >= end())
 			{
-				for (int i = 0; i < n; ++i)
+				for (size_t i = 0; i < n; ++i)
 					push_back(val);
 				return (--end());
 			}
-
-			T* temp_add = myallocator.allocate(position - end());
-			temp_add = *position;
-			myallocator.destroy(&(*position));
-			myallocator.construct(&(*position), val);
-			for (iterator it = position + 1; it < end() - 1; ++it)
+			for (iterator i = --end(); i <  end() - position; --i)
 			{
-				temp_destroy = *it;
-				myallocator.destroy(&*it);
-				myallocator.construct(&*it, temp_add);
-				temp_add = temp_destroy;
+				myallocator.construct(&m_data[m_size + n], m_data[m_size]);
+				myallocator.destroy(&m_data[m_size]);
 			}
-			push_back(temp_add);
-			return begin() + n;
+			for (size_t i = 0; i < n; ++i)
+				myallocator.construct(&m_data[diff + i], val);
+			return (begin() + diff);
 		}
 
 		void	clear()
