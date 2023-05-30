@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/29 22:14:34 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/30 12:48:37 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,16 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 	f->insert(f->begin(), 12);
 	cmp_vectors(s, f, test0 + test1);
 
-	test1 = "insert n";
-	s->insert(s->begin(), 50, 12);
-	f->insert(f->begin(), 50, 12);
+	std::cout << "size " << s->size() << " " << f->size() << std::endl;
+	std::cout << "capacity " << s->capacity() << " " << f->capacity() << std::endl;
+	test1 = "insert n ";
+	s->insert(s->begin(), 3, 12);
+	f->insert(f->begin(), 3, 12);
+	std::cout << "size " << s->size() << " " << f->size() << std::endl;
+	std::cout << "capacity " << s->capacity() << " " << f->capacity() << std::endl;
 	cmp_vectors(s, f, test0 + test1);
 
-	test1 = "insert";
+	test1 = "insert 2";
 	s->insert(s->begin() + 1 , 12);
 	f->insert(f->begin() + 1, 12);
 	cmp_vectors(s, f, test0 + test1);
@@ -277,10 +281,46 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
   // }
 }
 
+
+void stdprint(int id, const std::vector<int>& container)
+{
+    std::cout << id << ". ";
+    for (const int x: container)
+        std::cout << x << ' ';
+    std::cout << "capacity: " << container.capacity() << '\n';
+}
+void ftprint(int id, const ft::vector<int>& container)
+{
+    std::cout << id << ". ";
+    for (const int x: container)
+        std::cout << x << ' ';
+    std::cout << "capacity: " << container.capacity() << '\n';
+}
+
 int main() {
 
 
   try {
+	
+	{
+		std::vector<int> c1(3, 100);
+		ft::vector<int> c2(3, 100);
+		stdprint(1, c1);
+	
+		auto it = c1.begin();
+		it = c1.insert(it, 200);
+		stdprint(2, c1);
+		auto it2 = c2.begin();
+		it2 = c2.insert(it2, 200);
+		ftprint(2, c2);
+		
+	
+		c1.insert(it, 2, 300);
+		stdprint(3, c1);
+		c2.insert(it2, 2, 300);
+		ftprint(3, c2);
+		return 0;
+	}
     std::string test0 = "Deafult constructor: ";
     std::vector<int> stda;
     ft::vector<int> fta;

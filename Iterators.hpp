@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterators.hpp                                      :+:      :+:    :+:   */
+/*   Iterators.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:24 by ayassin           #+#    #+#             */
-/*   Updated: 2023/03/28 13:35:47 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/30 12:40:23 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 	      iterator(const iterator & it) : ptr(it.ptr){}
 			iterator (pointer p, difference_type n) : ptr(p + n){}
 			
-			iterator &operator=(const iterator &other) {ptr = other.ptr;}
+			iterator &operator=(const iterator &other) {ptr = other.ptr; return *this;}
 			
 	      iterator & operator++() {
 	         ++ptr;
