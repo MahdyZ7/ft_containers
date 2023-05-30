@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/30 12:48:37 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:14:52 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,20 @@ void print_test(bool x, std::string str) {
                              "\033[0m");
   // std::cout << "\033[0;32m" << str << ": completed" << "\033[0m" <<
   // std::endl;
+}
+void stdprint(int id,  std::vector<int>* container)
+{
+    std::cout << id << ". ";
+    for (std::vector<int>::iterator it = container->begin(); it != container->end(); ++it)
+        std::cout << *it << ' ';
+    std::cout << "capacity: " << container->capacity() << '\n';
+}
+void ftprint(int id, ft::vector<int>* container)
+{
+    std::cout << id << ". ";
+    for (ft::vector<int>::iterator it = container->begin(); it != container->end(); ++it)
+        std::cout << *it << ' ';
+    std::cout << "capacity: " << container->capacity() << '\n';
 }
 
 template <class T>
@@ -158,8 +172,12 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert 2";
-	s->insert(s->begin() + 1 , 12);
-	f->insert(f->begin() + 1, 12);
+	stdprint(1, s);
+	ftprint(1, f);
+	s->insert(s->begin() + 1 , 32);
+	f->insert(f->begin() + 1, 32);
+	stdprint(2, s);
+	ftprint(2, f);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert(end)";
@@ -282,20 +300,6 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 }
 
 
-void stdprint(int id, const std::vector<int>& container)
-{
-    std::cout << id << ". ";
-    for (const int x: container)
-        std::cout << x << ' ';
-    std::cout << "capacity: " << container.capacity() << '\n';
-}
-void ftprint(int id, const ft::vector<int>& container)
-{
-    std::cout << id << ". ";
-    for (const int x: container)
-        std::cout << x << ' ';
-    std::cout << "capacity: " << container.capacity() << '\n';
-}
 
 int main() {
 
@@ -305,20 +309,32 @@ int main() {
 	{
 		std::vector<int> c1(3, 100);
 		ft::vector<int> c2(3, 100);
-		stdprint(1, c1);
+		stdprint(1, &c1);
 	
-		auto it = c1.begin();
-		it = c1.insert(it, 200);
-		stdprint(2, c1);
-		auto it2 = c2.begin();
-		it2 = c2.insert(it2, 200);
-		ftprint(2, c2);
+		c1.push_back(200);
+		c2.push_back(200);
+		std::vector<int>::iterator it = c1.end() - 1;
+		// it = c1.insert(it, 200);
+		stdprint(2, &c1);
+		ft::vector<int>::iterator it2 = c2.end() - 1;
+		// it2 = c2.insert(it2, 200);
+		ftprint(2, &c2);
 		
+		it = c1.insert(c1.begin() + 1,444);
+		stdprint(22, &c1);
+		it2 = c2.insert(c2.begin() + 1, 444);
+		ftprint(22, &c2);
 	
-		c1.insert(it, 2, 300);
-		stdprint(3, c1);
-		c2.insert(it2, 2, 300);
-		ftprint(3, c2);
+		it = c1.insert(it, 20, 300);
+		stdprint(3, &c1);
+		it2 = c2.insert(it2, 20, 300);
+		ftprint(3, &c2);
+
+		it = c1.insert(it, 1, 111);
+		stdprint(4, &c1);
+		it2 = c2.insert(it2, 1, 111);
+		ftprint(4, &c2);
+		cmp_vectors(&c1, &c2, "basic test ");
 		return 0;
 	}
     std::string test0 = "Deafult constructor: ";

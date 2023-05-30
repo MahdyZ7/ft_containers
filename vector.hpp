@@ -332,8 +332,8 @@ namespace ft
 			for (iterator it = position + 1; it < end() - 1; ++it)
 			{
 				temp_destroy = *it;
-				myallocator.destroy(&*it);
-				myallocator.construct(&*it, temp_add);
+				// myallocator.destroy(&*it);
+				// myallocator.construct(&*it, temp_add);
 				temp_add = temp_destroy;
 			}
 			push_back(temp_add);
@@ -350,6 +350,14 @@ namespace ft
 			{
 				std::cout << "reserve" << std::endl;
 				Allocator temp_allocator = myallocator;
+				size_t new_capacity = m_size + n;
+				if ( m_capacity * 2 > m_size + n)
+				{
+					new_capacity = m_capacity * 2;
+					temp_allocator.allocate(m_capacity * 2);
+				}
+				else
+					temp_allocator.allocate(m_size + n);
 				T* new_data = temp_allocator.allocate(m_size + n);
 				std::cout << "new capacity: " << m_size + n << std::endl;
 				for (typename iterator::difference_type i = 0; i < diff; ++i)
@@ -367,7 +375,7 @@ namespace ft
 				if (m_data != NULL)
 					temp_allocator.deallocate(m_data, m_capacity);
 				m_data = new_data;
-				m_capacity = m_size + n;
+				m_capacity = new_capacity;
 				m_size = m_size + n;
 				return (begin() + diff);
 			}
