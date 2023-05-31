@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/30 16:14:52 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:37:56 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,22 +162,20 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 	f->insert(f->begin(), 12);
 	cmp_vectors(s, f, test0 + test1);
 
-	std::cout << "size " << s->size() << " " << f->size() << std::endl;
-	std::cout << "capacity " << s->capacity() << " " << f->capacity() << std::endl;
 	test1 = "insert n ";
-	s->insert(s->begin(), 3, 12);
-	f->insert(f->begin(), 3, 12);
-	std::cout << "size " << s->size() << " " << f->size() << std::endl;
-	std::cout << "capacity " << s->capacity() << " " << f->capacity() << std::endl;
+	s->insert(s->begin(), 1, 111);
+	f->insert(f->begin(), 1, 111);
+	cmp_vectors(s, f, test0 + test1);
+
+	
+	test1 = "insert n2 ";
+	s->insert(s->begin(), 20, 111);
+	f->insert(f->begin(), 20, 111);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert 2";
-	stdprint(1, s);
-	ftprint(1, f);
 	s->insert(s->begin() + 1 , 32);
 	f->insert(f->begin() + 1, 32);
-	stdprint(2, s);
-	ftprint(2, f);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert(end)";
@@ -307,8 +305,14 @@ int main() {
   try {
 	
 	{
-		std::vector<int> c1(3, 100);
-		ft::vector<int> c2(3, 100);
+		std::vector<int> c1;
+		c1.push_back(10);
+		c1.push_back(20);
+		c1.push_back(30);
+		ft::vector<int> c2;
+		c2.push_back(10);
+		c2.push_back(20);
+		c2.push_back(30);
 		stdprint(1, &c1);
 	
 		c1.push_back(200);
@@ -325,17 +329,20 @@ int main() {
 		it2 = c2.insert(c2.begin() + 1, 444);
 		ftprint(22, &c2);
 	
-		it = c1.insert(it, 20, 300);
+		std::cout << "return number" << *it << " " << "Trouble" << std::endl;
+		std::cout << "return number" << *it << " " << *it2 << std::endl;
+		std::cout << " diff " << (c2.begin() + 1) - c2.begin() << std::endl;
+		it = c1.insert(it, 1, 300);
 		stdprint(3, &c1);
-		it2 = c2.insert(it2, 20, 300);
+		it2 = c2.insert(it2, 1, 300);
 		ftprint(3, &c2);
 
-		it = c1.insert(it, 1, 111);
+		it = c1.insert(it, 8, 111);
 		stdprint(4, &c1);
-		it2 = c2.insert(it2, 1, 111);
+		it2 = c2.insert(it2, 8, 111);
 		ftprint(4, &c2);
 		cmp_vectors(&c1, &c2, "basic test ");
-		return 0;
+		// return 0;
 	}
     std::string test0 = "Deafult constructor: ";
     std::vector<int> stda;
@@ -378,7 +385,7 @@ int main() {
 
 	repetative_talk(&stda_size2, &fta_size2, test0);
 
-	test0 = "iteraotr constructor";
+	test0 = "iteraotr constructor ";
 	  std::vector<int> stda_temp;
 	  ft::vector<int> fta_temp;
 	  for (int i = 0; i < 100; ++i) {

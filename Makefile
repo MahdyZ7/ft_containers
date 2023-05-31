@@ -6,7 +6,7 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/05/28 09:26:39 by ayassin          ###   ########.fr        #
+#    Updated: 2023/05/31 14:49:51 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = main.cpp
 
 CC = c++
 
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address # -std=c++98 # -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address # -std=c++98 # -fsanitize=address
 
 OBJDIR = obj
 

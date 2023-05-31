@@ -313,13 +313,12 @@ namespace ft
 		void	pop_back()
 		{
 			myallocator.destroy(m_data + --m_size);
-			// 
 		}
 
 		iterator insert (iterator position, const value_type& val)
 		{
 			T temp_add = val, temp_destroy;
-			typename iterator::difference_type n = std::distance(position, begin());
+			typename iterator::difference_type n = std::distance(begin(), position);
 
 			if (position >= end())
 			{
@@ -329,11 +328,11 @@ namespace ft
 			temp_add = *position;
 			myallocator.destroy(&(*position));
 			myallocator.construct(&(*position), val);
-			for (iterator it = position + 1; it < end() - 1; ++it)
+			for (iterator it = position + 1; it < end(); ++it)
 			{
 				temp_destroy = *it;
-				// myallocator.destroy(&*it);
-				// myallocator.construct(&*it, temp_add);
+				myallocator.destroy(&*it);
+				myallocator.construct(&*it, temp_add);
 				temp_add = temp_destroy;
 			}
 			push_back(temp_add);
@@ -342,24 +341,15 @@ namespace ft
 
 		iterator insert (iterator position, size_type n, const value_type& val)
 		{
-			typename iterator::difference_type diff = position - begin();
-
+			typename iterator::difference_type diff = std::distance(begin(), position);
 			if (n == 0)
 				return position; // check for position > end()
 			if ( m_size + n > m_capacity)
 			{
-				std::cout << "reserve" << std::endl;
 				Allocator temp_allocator = myallocator;
-				size_t new_capacity = m_size + n;
-				if ( m_capacity * 2 > m_size + n)
-				{
-					new_capacity = m_capacity * 2;
-					temp_allocator.allocate(m_capacity * 2);
-				}
-				else
-					temp_allocator.allocate(m_size + n);
-				T* new_data = temp_allocator.allocate(m_size + n);
-				std::cout << "new capacity: " << m_size + n << std::endl;
+				size_t new_capacity =  m_capacity * 2 > m_size + n ? m_capacity * 2 : m_size + n;
+				T* new_data;
+				new_data = temp_allocator.allocate(new_capacity);
 				for (typename iterator::difference_type i = 0; i < diff; ++i)
 				{
 					temp_allocator.construct(&new_data[i], m_data[i]);
@@ -385,7 +375,7 @@ namespace ft
 					push_back(val);
 				return (--end());
 			}
-			for (iterator it = --end(); it != position + n; --it)
+			for (iterator it = --end(); it >= position; --it)
 			{
 				myallocator.construct(&(*(it + n)), *it);
 				myallocator.destroy(&(*it));
@@ -396,6 +386,65 @@ namespace ft
 			return (begin() + diff);
 		}
 
+		template <class InputIterator>
+		typename std::enable_if<!std::is_integral<InputIterator>::value, iterator>::type
+		insert (iterator position, InputIterator first, InputIterator last)
+		{
+			if (first == last)
+				return position;
+			typename iterator::difference_type diff = std::distance(begin(), position);
+			size_t n = std::distance(first, last);
+			if ( m_size + n > m_capacity)
+			{
+				Allocator temp_allocator = myallocator;
+				size_t new_capacity =  m_capacity * 2 > m_size + n ?  m_capacity * 2 : m_size + n;
+				T* new_data;
+				new_data = temp_allocator.allocate(new_capacity);
+				for (typename iterator::difference_type i = 0; i < diff; ++i)
+				{
+					temp_allocator.construct(&new_data[i], m_data[i]);
+					temp_allocator.destroy(&m_data[i]);
+				}
+				for (size_t i = 0; i < n; ++i)
+				{
+					temp_allocator.construct(&new_data[diff + i], *first);
+					++first;
+				}
+				for (size_t i = diff; i < m_size; ++i)
+				{
+					temp_allocator.construct(&new_data[i + n], m_data[i]);
+					temp_allocator.destroy(&m_data[i]);
+				}
+				if (m_data != NULL)
+					temp_allocator.deallocate(m_data, m_capacity);
+				m_data = new_data;
+				m_capacity = new_capacity;
+				m_size = m_size + n;
+				return (begin() + diff);
+			}
+			if (position >= end())
+			{
+				for (size_t i = 0; i < n; ++i)
+				{
+					push_back(*first);
+					++first;
+				}
+				return (--end());
+			}
+			for (iterator it = --end(); it >= position; --it)
+			{
+				myallocator.construct(&(*(it + n)), *it);
+				myallocator.destroy(&(*it));
+			}
+			for (size_t i = 0; i < n; ++i)
+			{
+				myallocator.construct(&(*(position + i)), *first);
+				++first;
+			}
+			m_size += n;
+			return (begin() + diff);
+		}
+		
 		void	clear()
 		{
 			while (m_size)
