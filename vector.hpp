@@ -386,6 +386,7 @@ namespace ft
 			return (begin() + diff);
 		}
 
+		// iterator std::enable_if<!std::is_integral<InputIterator>::value, iterator>::type 
 		template <class InputIterator>
 		typename std::enable_if<!std::is_integral<InputIterator>::value, iterator>::type
 		insert (iterator position, InputIterator first, InputIterator last)
@@ -393,7 +394,7 @@ namespace ft
 			if (first == last)
 				return position;
 			typename iterator::difference_type diff = std::distance(begin(), position);
-			size_t n = std::distance(first, last);
+			size_t n = last - first; //std::distance(first, last);
 			if ( m_size + n > m_capacity)
 			{
 				Allocator temp_allocator = myallocator;
@@ -496,7 +497,7 @@ namespace ft
 
 
 	template < class T, class Allocator>
-	  template <class InputIterator>
+	template <class InputIterator>
 	ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc, typename std::enable_if<std::is_base_of<std::input_iterator_tag,
                                                   typename std::iterator_traits<InputIterator>::iterator_category>::value>::type*)
 	{

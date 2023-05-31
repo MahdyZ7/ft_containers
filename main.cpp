@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/31 15:37:56 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/05/31 21:47:51 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,28 +158,43 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
   cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert";
-	s->insert(s->begin(), 12);
-	f->insert(f->begin(), 12);
+	print_test(
+		*(s->insert(s->begin(), 12)) == *(f->insert(f->begin(), 12))
+		, test0 + test1);	
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert n ";
-	s->insert(s->begin(), 1, 111);
-	f->insert(f->begin(), 1, 111);
+	print_test(
+		*(s->insert(s->begin(), 1, 111)) == *(f->insert(f->begin(), 1, 111))
+		, test0 + test1);	
 	cmp_vectors(s, f, test0 + test1);
 
 	
 	test1 = "insert n2 ";
-	s->insert(s->begin(), 20, 111);
-	f->insert(f->begin(), 20, 111);
+	print_test(
+		*(s->insert(s->begin(), 20, 111)) == *(f->insert(f->begin(), 20, 111))
+		, test0 + test1);
+	cmp_vectors(s, f, test0 + test1);
+
+	std::vector<int> c2(2, 400);
+	print_test(
+    	*(s->insert((s->begin() + 2), c2.begin(), c2.end())) == *(f->insert((f->begin() + 2), c2.begin(), c2.end()))
+		, test0 + test1);
+	cmp_vectors(s, f, test0 + test1);
+ 
+    int arr[] = {501, 502, 503};
+	print_test (
+    	*(s->insert(s->begin(), arr, arr + 3)) == *(f->insert(f->begin(), arr, arr + 3))
+		, test0 + test1);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert 2";
-	s->insert(s->begin() + 1 , 32);
-	f->insert(f->begin() + 1, 32);
+	print_test(
+		*(s->insert(s->begin() + 1 , 32)) == *(f->insert(f->begin() + 1, 32))
+		, test0 + test1);
 	cmp_vectors(s, f, test0 + test1);
 
 	test1 = "insert(end)";
-	// std::cout << *(s->insert(s->end(), 43)) << " " << *(f->insert(f->end(), 43)) << std::endl;
 	print_test(*(s->insert(s->end(), 13)) == *(f->insert(f->end(), 13)), test0 + test1);
 	cmp_vectors(s, f, test0 + test1);
 
