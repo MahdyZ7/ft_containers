@@ -445,6 +445,36 @@ namespace ft
 			m_size += n;
 			return (begin() + diff);
 		}
+
+		iterator erase (iterator position)
+		{
+			if (position >= end())
+				return position;
+			for (iterator it = position; it < end() - 1; ++it)
+			{
+				myallocator.construct(&(*it), *(it + 1));
+				myallocator.destroy(&(*(it + 1)));
+			}
+			myallocator.destroy(&(*(end() - 1)));
+			--m_size;
+			return position;
+		}
+
+		iterator erase( iterator first, iterator last )
+		{
+			if (first >= end())
+				return first;
+			size_t n = last - first;
+			for (iterator it = first; it < end() - n; ++it)
+			{
+				myallocator.construct(&(*it), *(it + n));
+				myallocator.destroy(&(*(it + n)));
+			}
+			for (iterator it = end() - n; it < end(); ++it)
+				myallocator.destroy(&(*it));
+			m_size -= n;
+			return first;
+		}
 		
 		void	clear()
 		{
