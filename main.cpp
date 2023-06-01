@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:16 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/31 21:47:51 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/01 20:05:50 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,21 @@ void repetative_talk(std::vector<T> *s, ft::vector<T> *f, std::string test0) {
 		, test0 + test1);
 	cmp_vectors(s, f, test0 + test1);
 
+	test1 = "erase iterator ";
+	print_test (
+    	*(s->erase(s->begin(), s->begin() + 3)) == *(f->erase(f->begin(),f->begin() + 3))
+		, test0 + test1);
+	cmp_vectors(s, f, test0 + test1);
+
 	test1 = "insert 2";
 	print_test(
 		*(s->insert(s->begin() + 1 , 32)) == *(f->insert(f->begin() + 1, 32))
+		, test0 + test1);
+	cmp_vectors(s, f, test0 + test1);
+	
+	test1 = "erase ";
+	print_test(
+		*(s->erase(s->begin() + 1)) == *(f->erase(f->begin() + 1))
 		, test0 + test1);
 	cmp_vectors(s, f, test0 + test1);
 
@@ -330,6 +342,8 @@ int main() {
 		c2.push_back(30);
 		stdprint(1, &c1);
 	
+		ft::vector<int>::const_iterator ite = c2.begin();
+		ite++;
 		c1.push_back(200);
 		c2.push_back(200);
 		std::vector<int>::iterator it = c1.end() - 1;

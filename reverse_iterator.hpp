@@ -27,7 +27,7 @@ namespace ft
 	      // reverse_iterator(const T & it) : ptr(it.ptr){}
 			// reverse_iterator (pointer p, difference_type n) : ptr(p + n){}
 			
-			reverse_iterator &operator=(const T &other) {ptr = other.ptr;}
+			reverse_iterator &operator=(const T &other) {ptr = other.ptr; return *this;}
 			
 	      reverse_iterator & operator++() {
 	         --ptr;

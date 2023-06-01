@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:24 by ayassin           #+#    #+#             */
-/*   Updated: 2023/05/30 12:40:23 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/01 21:59:14 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace ft
 	template <class T>
 	class iterator {
 	
-	   public:
+	public:
 			typedef T value_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef T* pointer;
@@ -31,12 +31,18 @@ namespace ft
 	
 	   public:
 	
-	      iterator(pointer p = NULL) : ptr(p){}
-	      iterator(const iterator & it) : ptr(it.ptr){}
-			iterator (pointer p, difference_type n) : ptr(p + n){}
+	    iterator(pointer p = NULL) : ptr(p){}
+	    iterator(const iterator & it) : ptr(it.ptr){}
+		template <typename iter>
+		iterator(const iterator<iter> & it): ptr(it.base()){};
+		iterator (pointer p, difference_type n) : ptr(p + n){}
 			
-			iterator &operator=(const iterator &other) {ptr = other.ptr; return *this;}
-			
+		iterator &operator=(const iterator &other) {ptr = other.ptr; return *this;}
+		
+		pointer base() const
+		{
+			return (ptr);
+		}	
 	      iterator & operator++() {
 	         ++ptr;
 	         return *this;

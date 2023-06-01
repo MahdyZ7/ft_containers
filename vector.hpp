@@ -31,7 +31,7 @@ namespace ft
 		// typedef implementation-defined						iterator;
 		typedef ft::iterator<T>		iterator;
 		// typedef ft::iterator<T>		iterator;
-		typedef ft::const_iterator<T>		const_iterator;
+		typedef ft::iterator<const T>		const_iterator;
 		// typedef ft::iterator<const T>		const_iterator;
 
 		// typedef std::iterator<const_pointer, vector> const_iterator;
@@ -39,7 +39,7 @@ namespace ft
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 	private:
 		size_t		m_size;
@@ -47,8 +47,6 @@ namespace ft
 		// std::allocator_traits<allocator_type>	m_begin;
 		// std::allocator_traits<allocator_type>	m_end;
 		T*			m_data;
-		T*			m_begin;
-		T*			m_end;
 		// T*			p_end_of_storage;
 		Allocator	myallocator;
 
@@ -120,7 +118,6 @@ namespace ft
 		// Iterators
 		iterator begin()
 		{
-			// return m_data;std::iterator<T, Allocator>(m_data, 0);
 			return iterator(m_data);
 		}
 		const_iterator begin() const
@@ -141,17 +138,18 @@ namespace ft
 		{
 			return reverse_iterator((end()));
 		}
-		const_iterator rbegin() const
+
+		const_reverse_iterator rbegin() const
 		{
-			return const_iterator (end()); 
+			return const_reverse_iterator (end()); 
 		}
 		reverse_iterator rend()
 		{
 			return reverse_iterator(begin());
 		}
-		const_iterator rend() const
+		const_reverse_iterator rend() const
 		{
-			return const_iterator(begin()); 
+			return const_reverse_iterator(begin()); 
 		}
 
 		// Capacity
@@ -483,14 +481,25 @@ namespace ft
 			
 		}
 
-		// swap
-		// void	swap(vector& other)
-		// {
-		// 	vector temp = *this;
-		// 	*this = other;
-		// 	other = temp;
-		// }
-		// destructor
+		//swap
+	void swap (vector& x)
+	{
+		T* temp_data = m_data;
+		size_t temp_size = m_size;
+		size_t temp_capacity = m_capacity;
+		Allocator temp_allocator = myallocator;
+
+		m_data = x.m_data;
+		m_size = x.m_size;
+		m_capacity = x.m_capacity;
+		myallocator = x.myallocator;
+
+		x.m_data = temp_data;
+		x.m_size = temp_size;
+		x.m_capacity = temp_capacity;
+		x.myallocator = temp_allocator;
+	}
+
 		~vector();
 	};
 
@@ -504,8 +513,6 @@ namespace ft
 		m_size = 0;
 		myallocator = alloc;
 		m_data = myallocator.allocate(0);
-		m_begin = m_data;
-		m_end = m_data + m_size + 1;
 	}
 
 	template < class T, class Allocator>
@@ -521,8 +528,6 @@ namespace ft
 			myallocator.construct(m_data + m_size, val);
 			++m_size;
 		}
-		m_begin = m_data;
-		m_end = m_data + m_size + 1;
 	}
 
 
@@ -555,8 +560,6 @@ namespace ft
 			myallocator.construct(m_data + m_size, x.m_data[m_size]);
 			++m_size;
 		}
-		m_begin = m_data;
-		m_end = m_data + m_size + 1;
 	}
 
 	template < class T, class Allocator>
