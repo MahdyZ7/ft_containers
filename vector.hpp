@@ -228,7 +228,7 @@ namespace ft
 		typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
 		assign (InputIterator first, InputIterator last)
 		{
-			size_t n = last - first;
+			size_t n = std::distance(first, last);
 			if (n <= m_capacity)
 			{
 				for (size_t i = 0; i < n; ++i)
@@ -392,7 +392,7 @@ namespace ft
 			if (first == last)
 				return position;
 			typename iterator::difference_type diff = std::distance(begin(), position);
-			size_t n = last - first; //std::distance(first, last);
+			size_t n = std::distance(first, last);
 			if ( m_size + n > m_capacity)
 			{
 				Allocator temp_allocator = myallocator;
@@ -536,13 +536,14 @@ namespace ft
 	ft::vector<T, Allocator>::vector(InputIterator first, InputIterator last, const Allocator& alloc, typename std::enable_if<std::is_base_of<std::input_iterator_tag,
                                                   typename std::iterator_traits<InputIterator>::iterator_category>::value>::type*)
 	{
-		m_capacity = last - first; // to be checked
+		m_capacity = std::distance(first, last); // to be checked
 		myallocator = alloc;
 		m_size = 0;
 		m_data = myallocator.allocate(m_capacity); // to be checked
-		for (iterator it = first; it != last; ++it)
+		while(first != last)
 		{
-			myallocator.construct(m_data + m_size, *it);
+			myallocator.construct(m_data + m_size, *first);
+			++first;
 			++m_size;
 		}
 	}
@@ -568,6 +569,59 @@ namespace ft
 		for (size_t i = 0; i < m_size; ++i)
 			myallocator.destroy(m_data + i);
 		myallocator.deallocate(m_data, m_capacity);
+	}
+
+	template <class T, class Alloc>
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+		for (typename vector<T, Alloc>::const_iterator it1 = lhs.begin(), it2 = rhs.begin(); it1 != lhs.end(); ++it1, ++it2)
+		{
+			if (*it1 != *it2)
+				return false;
+		}
+		return true;
+	}
+
+	template <class T, class Alloc>
+	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator< (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{
+		typename vector<T, Alloc>::const_iterator it1 = lhs.begin(), it2 = rhs.begin(), it1_end = lhs.end(), it2_end = rhs.end();
+		while (it1 != it1_end)
+		{
+			if (*it1 < *it2)
+				return true;
+			else if (*it2 < *it1 || it2 == it2_end)
+				return false;
+			++it1;
+			++it2;
+		}
+		return (it2!=it2_end);
+	}
+
+	template <class T, class Alloc>
+	bool operator<= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator> (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{
+		return rhs < lhs;
+	}
+
+	template <class T, class Alloc>
+	bool operator>= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{
+		return !(lhs < rhs);
 	}
 
 }

@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:24 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/01 21:59:14 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/03 14:50:25 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,56 @@ namespace ft
 	      reference operator[](difference_type k) const {
 	         return *(ptr + k);
 	      }
-	
+
 	   };
 	
-	   // iterator begin() const {
-	   //    return iterator(this, 0);
-	   // }
-	
-	   // iterator end() const {
-	   //    return iterator(this, count);
-	   // }
-	
+		template <class T>
+		iterator<T> operator+(typename iterator<T>::difference_type n, const iterator<T>& it)
+		{
+			return (iterator<T>(it.base() + n));
+		}
+
+		template <class T>
+		iterator<T> operator-(typename iterator<T>::difference_type n, const iterator<T>& it)
+		{
+			return (iterator<T>(it.base() - n));
+		}
+
+		template <class T, class T1>
+		bool operator!=(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() != rhs.base());
+		}
+
+		template <class T, class T1>
+		bool operator==(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() == rhs.base());
+		}
+
+		template <class T, class T1>
+		bool operator<(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() < rhs.base());
+		}
+
+		template <class T, class T1>
+		bool operator<=(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() <= rhs.base());
+		}
+
+		template <class T, class T1>
+		bool operator>(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() > rhs.base());
+		}
+
+		template <class T, class T1>
+		bool operator>=(const iterator<T>& lhs, const iterator<T1>& rhs)
+		{
+			return (lhs.base() >= rhs.base());
+		}		
+
 }
 #endif
