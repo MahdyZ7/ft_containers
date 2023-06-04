@@ -100,10 +100,10 @@ int main() {
 			
 			std::cout << "CONST REVERSE\n";
 			std::cout << "base :" << *(ite_rend.base()) << *(site_rend.base()) << std::endl ;
-			std::cout << "std: " << (site_rend < csite_rb) << std::endl;
-			std::cout << "ft: " << (ite_rend < cite_rb) << std::endl;
-			std::cout << "base std: " << (site_rend.base() < csite_rb.base()) << std::endl;
-			std::cout << "base ft: " << (ite_rend.base()  < cite_rb.base() ) << std::endl;
+			std::cout << "std: " << (site_rb <= csite_rend) << std::endl;
+			std::cout << "ft: " << (ite_rb <= cite_rend) << std::endl;
+			std::cout << "base std: " << (site_rend.base() <= csite_rb.base()) << std::endl;
+			std::cout << "base ft: " << (ite_rend.base()  <= cite_rb.base() ) << std::endl;
 		}
 
 

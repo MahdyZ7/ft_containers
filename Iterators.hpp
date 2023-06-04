@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:32:24 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/03 14:50:25 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:18:11 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ namespace ft
 	      }
 	
 	      value_type *operator->() const {
-	         return ptr;
+	         return &(operator*());
 	      }
 	
 	      reference operator[](difference_type k) const {

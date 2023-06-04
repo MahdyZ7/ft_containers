@@ -14,7 +14,8 @@ namespace ft
 	
 	   public:
 
-			typedef T value_type; 
+			typedef typename T::value_type tmp_type;
+			typedef T value_type;
 			typedef std::ptrdiff_t difference_type;
 			typedef T* pointer;
 			typedef T& reference;
@@ -103,8 +104,12 @@ namespace ft
 	       return (*(ptr - 1));
 	    }
 	
-	    value_type *operator->() const {
-	    	return ptr;
+	    // value_type *operator->() const {
+	    tmp_type *operator->() const {
+			// return &(*(operator*()));
+			T tmp = ptr;
+			--tmp; 
+			return ((tmp).operator->());
 	    }
 	
 	    typename T::reference operator[](difference_type k) const {
@@ -144,25 +149,25 @@ namespace ft
 		template <class T, class T1>
 		bool operator<(const reverse_iterator<T>& lhs, const reverse_iterator<T1>& rhs)
 		{
-			return (lhs.base() < rhs.base());
+			return (lhs.base() > rhs.base());
 		}
 
 		template <class T, class T1>
 		bool operator<=(const reverse_iterator<T>& lhs, const reverse_iterator<T1>& rhs)
 		{
-			return (lhs.base() <= rhs.base());
+			return (lhs.base() >= rhs.base());
 		}
 
 		template <class T, class T1>
 		bool operator>(const reverse_iterator<T>& lhs, const reverse_iterator<T1>& rhs)
 		{
-			return (lhs.base() > rhs.base());
+			return (lhs.base() < rhs.base());
 		}
 
 		template <class T, class T1>
 		bool operator>=(const reverse_iterator<T>& lhs, const reverse_iterator<T1>& rhs)
 		{
-			return (lhs.base() >= rhs.base());
+			return (lhs.base() <= rhs.base());
 		}		
 }
 #endif
