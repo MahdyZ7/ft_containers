@@ -7,7 +7,6 @@
 # include <type_traits>
 #include "Iterators.hpp"
 #include "reverse_iterator.hpp"
-#include "ConstantIterators.hpp"
 
 
 namespace ft
@@ -76,23 +75,12 @@ namespace ft
 		vector (InputIterator first, InputIterator last, const Allocator& alloc = Allocator(), typename std::enable_if<std::is_base_of<std::input_iterator_tag,
                                                   typename std::iterator_traits<InputIterator>::iterator_category>::value>::type* = 0);
 		vector (const vector& x);
-		// template <class InputIterator>
-		// vector(InputIterator first,
-        //     	typename std::enable_if<is_iterator   <InputIterator>::value &&
-		// 		std::is_constructible<
-        //                             value_type,
-        //                             typename std::iterator_traits<InputIterator>::reference>::value,
-        //                          InputIterator>::type last, const Allocator& alloc = Allocator());
 
-		// template<typename InputIterator, typename = typename std::enable_if<is_iterator<InputIterator>::value>::type>
-		// std::vector<typename std::iterator_traits<InputIterator>::value_type> make_vector(InputIterator first, InputIterator last) {
-		// 	return std::vector<typename std::iterator_traits<InputIterator>::value_type>(first, last);
-		// }
-
-		// template<typename T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
-		// std::vector<T> make_vector(size_t n, const T& val = T()) {
-		// 	return std::vector<T>(n, val);
-		// }
+		//get allocator
+		allocator_type get_allocator() const
+		{
+			return myallocator;
+		}
 
 		// = operator
 		vector& operator= (const vector& x)
@@ -133,7 +121,7 @@ namespace ft
 			return const_iterator(m_data, m_size); 
 		}
 
-// Iterators
+		// Iterators
 		reverse_iterator rbegin()
 		{
 			return reverse_iterator((end()));
@@ -210,12 +198,10 @@ namespace ft
 			// front const
 		const_reference front() const { return m_data[0]; }
 			// back
-		
 		reference back() { return m_data[m_size - 1]; }
 			// back const
 		const_reference back() const { return m_data[m_size - 1]; }
 			// data
-		
 		reference data() { return m_data; };
 			// data const
 		const_reference data() const { return m_data;} ;
@@ -298,12 +284,9 @@ namespace ft
 			else if (m_size == m_capacity)
 			{
 				reserve (m_capacity << 1);
-				// m_capacity <<= 1;
-				// realocate double the m_capacity
 			}
 			myallocator.construct(m_data + m_size, val);
 			++m_size;
-			// 
 		}
 
 
@@ -506,9 +489,6 @@ namespace ft
 	template < class T, class Allocator>
 	ft::vector<T, Allocator>::vector(const Allocator& alloc)
 	{
-		// p_begin = nullptr;
-		// p_end = nullptr;
-		// p_end_of_storage = nullptr;
 		m_capacity = 0;
 		m_size = 0;
 		myallocator = alloc;
@@ -521,7 +501,6 @@ namespace ft
 		m_size = 0;
 		m_capacity = n; // to be checked
 		myallocator = alloc;
-		// if (m_capacity)
 		m_data = myallocator.allocate(m_capacity); // to be checked
 		while (m_size < m_capacity)
 		{
@@ -569,6 +548,13 @@ namespace ft
 		for (size_t i = 0; i < m_size; ++i)
 			myallocator.destroy(m_data + i);
 		myallocator.deallocate(m_data, m_capacity);
+	}
+
+	template< class T, class Alloc >
+	void swap( std::vector<T, Alloc>& lhs,
+				std::vector<T, Alloc>& rhs )
+	{
+		lhs.swap(rhs);
 	}
 
 	template <class T, class Alloc>

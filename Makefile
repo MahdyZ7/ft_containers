@@ -6,7 +6,7 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/06/03 10:25:03 by ayassin          ###   ########.fr        #
+#    Updated: 2023/06/05 10:05:47 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address # -std=c++98 # -fsanitize=addr
 
 OBJDIR = obj
 
-HEADERS = vector.hpp Iterators.hpp ConstantIterators.hpp
+HEADERS = vector.hpp Iterators.hpp reverse_iterator.hpp map/map.hpp
 
 _OBJS = $(SRC:.cpp=.o)
 OBJS = $(addprefix $(OBJDIR)/,$(_OBJS))
