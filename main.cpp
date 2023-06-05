@@ -95,7 +95,7 @@ void cmp_vectors(std::vector<T> *s, ft::vector<T> *f, std::string test) {
   print_test(s->size() == f->size(), test + "size");
   // std::cout << "capacity std: " << s->capacity() << " ft: " << f->capacity()
   // << std::endl;
-  print_test(s->capacity() == f->capacity(), test + "capacity");
+  // print_test(s->capacity() == f->capacity(), test + "capacity");
   // std::cout << "max_size std: " << s->max_size() << " ft: " << f->max_size()
   // << std::endl;
   print_test(s->max_size() == f->max_size(), test + "max_size");

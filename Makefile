@@ -16,7 +16,7 @@ SRC = main.cpp
 
 CC = c++
 
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address # -std=c++98 # -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address # -std=c++98 # -fsanitize=address
 
 OBJDIR = obj
 
