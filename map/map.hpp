@@ -47,12 +47,58 @@ namespace ft
 				}
 		};
 		
-		struct node
-		{
-			value_type	value;
-			node		*left;
-			node		*right;
-		};
+		private:
+			struct node
+			{
+				value_type	value;
+				node		*parent;
+				node		*left;
+				node		*right;
+			};
+
+			node	*_root;
+
+			map()
+			{
+				_root = new node;
+				_root->parent = NULL;
+				_root->left = NULL;
+				_root->right = NULL;
+			}
+
+			map(const Compare& comp, const Allocator& alloc = Allocator())
+			{
+				_root = new node;
+				_root->parent = NULL;
+				_root->left = NULL;
+				_root->right = NULL;
+			}
+
+			template <class InputIterator>
+			map(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
+			{
+				_root = new node;
+				_root->parent = NULL;
+				_root->left = NULL;
+				_root->right = NULL;
+			}
+
+			map( const map& other )
+			{
+				_root = new node;
+				_root->parent = NULL;
+				_root->left = NULL;
+				_root->right = NULL;
+			}
+
+			~map()
+			{
+				delete _root;
+			}
+
+
+
+
 		
 	};
 }
