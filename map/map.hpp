@@ -34,7 +34,7 @@ namespace ft
 		// const_iterator	LegacyBidirectionalIterator to const value_type
 		// reverse_iterator	std::reverse_iterator<iterator>
 		// const_reverse_iterator	std::reverse_iterator<const_iterator>
-		class value_compare: public std::binary_function<value_type, value_type, bool>
+		class value_compare
 		{
 			friend class map;
 			protected:
@@ -57,7 +57,8 @@ namespace ft
 			};
 
 			node	*_root;
-
+		public:
+		
 			map()
 			{
 				_root = new node;
