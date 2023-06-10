@@ -5,8 +5,9 @@
 #include <exception>
 #include <iterator>
 # include <type_traits>
-#include <map>
+// #include <map>
 #include "map_utils.hpp"
+#include "pair.hpp"
 
 namespace ft
 {
@@ -20,7 +21,7 @@ namespace ft
 
 		typedef Key									key_type;
 		typedef T									mapped_type;
-		typedef std::pair<const Key, T>				value_type;
+		typedef ft::pair<const Key, T>				value_type;
 		typedef Compare								key_compare;	
 		typedef Allocator							allocator_type;
 		typedef typename Allocator::reference       reference;
@@ -48,54 +49,41 @@ namespace ft
 		};
 		
 		private:
-			struct node
-			{
-				value_type	value;
-				node		*parent;
-				node		*left;
-				node		*right;
-			};
 
-			node	*_root;
+		// typedef Avl_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Alloc> Avl_type;
+		// AVL_type m_data;
+			// struct node
+			// {
+			// 	value_type	value;
+			// 	node		*parent;
+			// 	node		*left;
+			// 	node		*right;
+			// };
+
 		public:
 		
 			map()
 			{
-				_root = new node;
-				_root->parent = NULL;
-				_root->left = NULL;
-				_root->right = NULL;
+
 			}
 
-			map(const Compare& comp, const Allocator& alloc = Allocator())
-			{
-				_root = new node;
-				_root->parent = NULL;
-				_root->left = NULL;
-				_root->right = NULL;
-			}
+			// map(const Compare& comp, const Allocator& alloc = Allocator()): 
+			// {
 
-			template <class InputIterator>
-			map(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
-			{
-				_root = new node;
-				_root->parent = NULL;
-				_root->left = NULL;
-				_root->right = NULL;
-			}
+			// }
 
-			map( const map& other )
-			{
-				_root = new node;
-				_root->parent = NULL;
-				_root->left = NULL;
-				_root->right = NULL;
-			}
+			// template <class InputIterator>
+			// map(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
+			// {
 
-			~map()
-			{
-				delete _root;
-			}
+			// }
+
+			// map( const map& other )
+			// {
+
+			// }
+
+			~map(){}
 
 
 
