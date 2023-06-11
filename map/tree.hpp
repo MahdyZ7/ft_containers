@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:27:31 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/10 19:50:54 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/11 18:03:28 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 namespace ft
 {
-	template <class Tp, class Compare, class Allocator>
-	class tree
-	{
+	// template <class Tp, class Compare, class Allocator>
+	// class tree
+	// {
 		struct tree_node
 		{
 			typedef tree_node* node_ptr;
@@ -26,7 +26,7 @@ namespace ft
 			node_ptr	parent;
 			node_ptr	left;
 			node_ptr	right;
-			Tp			value;
+			// Tp			value;
 
 			static node_ptr Minimum(node_ptr x)
 			{
@@ -53,9 +53,42 @@ namespace ft
 			}
 		};
 
+		 template<class Val>
+	     struct AVL_tree_node: public tree_node
+	     {
+	       typedef AVL_tree_node<Val>* link;
+	       Val content;
+	     };
+
+		template<class Key, class Val,
+		class Compare, class Alloc = std::allocator<Val> >
+     	class Avl_tree
+		{
+			typedef typename Alloc::template rebind<AVL_tree_node<Val> >::other
+	               Node_allocator;
+	
+	    	protected:
+	      		typedef tree_node*  node_ptr;
+	    		typedef const tree_node* const_node_ptr;
+	    		typedef AVL_tree_node<Val> AVL_tree_node;
+	
+	     public:
+	       typedef Key					key_type;
+	       typedef Val					value_type;
+	       typedef value_type*			pointer;
+	       typedef const value_type*	const_pointer;
+	       typedef value_type&			reference;
+	       typedef const value_type&	const_reference;
+	       typedef AVL_tree_node*		link;
+	       typedef const AVL_tree_node* const_Link;
+	       typedef size_t 				size_type;
+	       typedef ptrdiff_t			difference_type;
+	       typedef Alloc 				allocator_type;
+		};
+
 		
 		
 		
-	};
+	// };
 }
 #endif

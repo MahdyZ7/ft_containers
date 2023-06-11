@@ -3,11 +3,12 @@
 
 #include <iostream>
 #include <exception>
-#include <iterator>
+// #include <iterator>
 # include <type_traits>
-// #include <map>
+#include <map>
 #include "map_utils.hpp"
 #include "pair.hpp"
+#include "tree.hpp"
 
 namespace ft
 {
@@ -15,7 +16,7 @@ namespace ft
 		class Key,
 		class T,
 		class Compare = std::less<Key>,
-		class Allocator = std::allocator<std::pair<const Key, T> >
+		class Allocator = std::allocator<ft::pair<const Key, T> >
 	> class map
 	{
 
@@ -50,21 +51,14 @@ namespace ft
 		
 		private:
 
-		// typedef Avl_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Alloc> Avl_type;
-		// AVL_type m_data;
-			// struct node
-			// {
-			// 	value_type	value;
-			// 	node		*parent;
-			// 	node		*left;
-			// 	node		*right;
-			// };
+		typedef Avl_tree<key_type, value_type, key_compare, Allocator> Avl_type;
+		Avl_type m_tree;
 
 		public:
 		
 			map()
 			{
-
+				
 			}
 
 			// map(const Compare& comp, const Allocator& alloc = Allocator()): 
