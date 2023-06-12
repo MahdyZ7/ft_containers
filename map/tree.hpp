@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:27:31 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/11 18:03:28 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/12 09:45:21 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ namespace ft
 	               Node_allocator;
 	
 	    	protected:
-	      		typedef tree_node*  node_ptr;
-	    		typedef const tree_node* const_node_ptr;
-	    		typedef AVL_tree_node<Val> AVL_tree_node;
+	      		typedef tree_node*			node_ptr;
+	    		typedef const tree_node*	const_node_ptr;
+	    		typedef AVL_tree_node<Val>	Avl_node;
 	
 	     public:
 	       typedef Key					key_type;
@@ -79,8 +79,8 @@ namespace ft
 	       typedef const value_type*	const_pointer;
 	       typedef value_type&			reference;
 	       typedef const value_type&	const_reference;
-	       typedef AVL_tree_node*		link;
-	       typedef const AVL_tree_node* const_Link;
+	       typedef Avl_node*			avl_node_ptr;
+	       typedef const Avl_node* 		const_avl_node_ptr;
 	       typedef size_t 				size_type;
 	       typedef ptrdiff_t			difference_type;
 	       typedef Alloc 				allocator_type;
