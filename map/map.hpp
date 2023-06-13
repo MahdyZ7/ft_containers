@@ -77,6 +77,11 @@ namespace ft
 
 			// }
 
+			void insert(const key& k, const mapped_type& v)
+			{
+				m_tree.insert(k, v);
+			}
+
 			~map(){}
 
 
