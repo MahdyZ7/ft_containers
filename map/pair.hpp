@@ -21,7 +21,7 @@ namespace ft
 		template< class U1, class U2 >
 		pair( const pair<U1, U2>& p ): first(p.first), second(p.second){}
 		
-		pair& operator=(const pair& p){
+		pair& operator=(const pair<T1, T2>& p){
 			if (this != &p)
 			{
 				first = p.first;

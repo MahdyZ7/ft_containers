@@ -37,10 +37,10 @@ namespace ft
 		// const_reverse_iterator	std::reverse_iterator<const_iterator>
 
 		private:
-			typedef typename Alloc::template rebind<tree_node<Val> >::other
+			typedef typename allocator_type::template rebind<tree_node<value_type> >::other
 	               Node_allocator;
-	      	typedef tree_node<Val>*  node_ptr;
-	    	typedef const tree_node<Val>* const_node_ptr;
+	      	typedef tree_node<value_type>*  node_ptr;
+	    	typedef const tree_node<value_type>* const_node_ptr;
 			
 			Node_allocator node_allocator;
 			node_ptr _root;
@@ -62,6 +62,18 @@ namespace ft
 		
 		private:
 
+			node_ptr create_node(const value_type& x)
+			{
+				node_ptr tmp = node_allocator.allocate(1);
+				tmp->content = x;
+				return tmp;
+			}
+			
+			void destroy_node(node_ptr x)
+			{
+				node_allocator.destroy(x);
+				node_allocator.deallocate(x, 1);
+			}
 		// typedef Avl_tree<key_type, value_type, key_compare, Allocator> Avl_type;
 		// Avl_type m_tree;
 
@@ -88,13 +100,14 @@ namespace ft
 			size_type max_size() const {return node_allocator.max_size();}
 
 			// insert
-			pair<iterator,bool> insert (const value_type& val)
+			// pair<iterator,bool> insert (const value_type& val)
+			void insert (const value_type& val)
 			{
 				node_ptr tmp = _root;
 				node_ptr prev = NULL;
 
 				++_size;
-				node_ptr new_node = create_node(v);
+				node_ptr new_node = create_node(val);
 				if (_root == NULL)
 					_root = new_node;
 				else
@@ -102,33 +115,34 @@ namespace ft
 					while (tmp != NULL)
 					{
 						prev = tmp;
-						if (k == tmp->content.first)
+						if (val == tmp->content)
 						{
 							destroy_node(new_node);
 							--_size;
 							return ;
 						}
-						if (Compare(k, tmp->content.first))
+						if (val < tmp->content)
 							tmp = tmp->left;
 						else
 							tmp = tmp->right;
 					}
 				}
-				if (Compare(k, prev->content.first))
+				if (val < prev->content)
 					prev->left = new_node;
 				else
 					prev->right = new_node;
 				new_node->parent = prev;
 			}
-			void insert(const key_type& k, const mapped_type& v)
-			{
-				m_tree.insert(k, make_pair<key_type, mapped_type>(k,v));
-			}
 
-			void print_tree()
-			{
-				m_tree.print_tree();
-			}
+			// void insert(const key_type& k, const mapped_type& v)
+			// {
+			// 	m_tree.insert(k, make_pair<key_type, mapped_type>(k,v));
+			// }
+
+			// void print_tree()
+			// {
+			// 	m_tree.print_tree();
+			// }
 
 
 

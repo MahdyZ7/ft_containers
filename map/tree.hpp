@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:27:31 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/14 10:05:00 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:53:54 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,18 +104,7 @@ namespace ft
 		   ~Avl_tree() { clear(); }
 		   Avl_tree(const Avl_tree& x) { *this = x; }
 
-		   node_ptr create_node(const Val& x)
-			{
-				node_ptr tmp = node_allocator.allocate(1);
-				tmp->content = x;
-				return tmp;
-			}
-			
-			void destroy_node(node_ptr x)
-			{
-				node_allocator.destroy(x);
-				node_allocator.deallocate(x, 1);
-			}
+		  
 			
 			void insert(const key_type& k, const value_type& v)
 			{
