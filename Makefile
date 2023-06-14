@@ -6,13 +6,13 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/06/05 16:44:21 by ayassin          ###   ########.fr        #
+#    Updated: 2023/06/14 08:57:25 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_containers
 
-SRC = map/map_main.cpp
+SRC = map_main.cpp
 
 CC = c++
 

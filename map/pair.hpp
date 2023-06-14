@@ -11,7 +11,7 @@ namespace ft
 		typedef T1	first_type;
 		typedef T2	second_type;
 
-		private:
+		public: // should be private
 			first_type	first;
 			second_type	second;
 
@@ -22,8 +22,11 @@ namespace ft
 		pair( const pair<U1, U2>& p ): first(p.first), second(p.second){}
 		
 		pair& operator=(const pair& p){
-			first = p.first;
-			second = p.second;
+			if (this != &p)
+			{
+				first = p.first;
+				second = p.second;
+			}
 			return (*this);
 		}
 		~pair(){}

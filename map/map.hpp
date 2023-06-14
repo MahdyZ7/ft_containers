@@ -31,11 +31,22 @@ namespace ft
     	typedef typename Allocator::const_pointer   const_pointer;
     	typedef typename Allocator::size_type       size_type;
     	typedef typename Allocator::difference_type difference_type;
-		
 		// iterator	LegacyBidirectionalIterator to value_type
 		// const_iterator	LegacyBidirectionalIterator to const value_type
 		// reverse_iterator	std::reverse_iterator<iterator>
 		// const_reverse_iterator	std::reverse_iterator<const_iterator>
+
+		private:
+			typedef typename Alloc::template rebind<tree_node<Val> >::other
+	               Node_allocator;
+	      	typedef tree_node<Val>*  node_ptr;
+	    	typedef const tree_node<Val>* const_node_ptr;
+			
+			Node_allocator node_allocator;
+			node_ptr _root;
+		   	size_type _size;
+			size_type _hight;
+		
 		class value_compare
 		{
 			friend class map;
@@ -51,38 +62,74 @@ namespace ft
 		
 		private:
 
-		typedef Avl_tree<key_type, value_type, key_compare, Allocator> Avl_type;
-		Avl_type m_tree;
+		// typedef Avl_tree<key_type, value_type, key_compare, Allocator> Avl_type;
+		// Avl_type m_tree;
 
 		public:
 		
-			map()
-			{
-				
-			}
-
-			// map(const Compare& comp, const Allocator& alloc = Allocator()): 
-			// {
-
-			// }
-
+			map(): _root(0), _size(0), _hight(0) {}
+			map(const map& other): _root(0), _size(0), _hight(0) {*this = other;}
 			// template <class InputIterator>
-			// map(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
+			// map(InputIterator first, InputIterator last): _root(0), _size(0), _hight(0) {insert(first, last);}
+			~map(){}
+			// map &operator=(const map& other)
 			// {
-
+			// 	if (this != &other)
+			// 	{
+			// 		clear();
+			// 		insert(other.begin(), other.end());
+			// 	}
+			// 	return *this;
 			// }
 
-			// map( const map& other )
-			// {
+			// atributes	
+			bool empty() const {return _size == 0;}
+			size_type size() const {return _size;}
+			size_type max_size() const {return node_allocator.max_size();}
 
-			// }
-
-			void insert(const key& k, const mapped_type& v)
+			// insert
+			pair<iterator,bool> insert (const value_type& val)
 			{
-				m_tree.insert(k, v);
+				node_ptr tmp = _root;
+				node_ptr prev = NULL;
+
+				++_size;
+				node_ptr new_node = create_node(v);
+				if (_root == NULL)
+					_root = new_node;
+				else
+				{
+					while (tmp != NULL)
+					{
+						prev = tmp;
+						if (k == tmp->content.first)
+						{
+							destroy_node(new_node);
+							--_size;
+							return ;
+						}
+						if (Compare(k, tmp->content.first))
+							tmp = tmp->left;
+						else
+							tmp = tmp->right;
+					}
+				}
+				if (Compare(k, prev->content.first))
+					prev->left = new_node;
+				else
+					prev->right = new_node;
+				new_node->parent = prev;
+			}
+			void insert(const key_type& k, const mapped_type& v)
+			{
+				m_tree.insert(k, make_pair<key_type, mapped_type>(k,v));
 			}
 
-			~map(){}
+			void print_tree()
+			{
+				m_tree.print_tree();
+			}
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:27:31 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/13 17:59:27 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/14 10:05:00 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ namespace ft
 			}
 		};
 
-		 
-	    //  struct AVL_tree_node: public tree_node
-	    //  {
-	    //    typedef AVL_tree_node<Val>* link;
-	    //    Val content;
-	    //  };
-
 		template<class Key, class Val,
 		class Compare, class Alloc = std::allocator<Val> >
      	class Avl_tree
@@ -113,7 +106,7 @@ namespace ft
 
 		   node_ptr create_node(const Val& x)
 			{
-				node_ptr tmp = node_allocator(1);
+				node_ptr tmp = node_allocator.allocate(1);
 				tmp->content = x;
 				return tmp;
 			}
@@ -129,9 +122,9 @@ namespace ft
 				node_ptr tmp = _root;
 				node_ptr prev = NULL;
 				++_size;
-				node_ptr new_node = create_node(make_pair<const key_type, value_type>(k, v));
+				node_ptr new_node = create_node(v);
 				if (_root == NULL)
-					_root == new_node;
+					_root = new_node;
 				else
 				{
 					while (tmp != NULL)
@@ -179,6 +172,28 @@ namespace ft
 
 		   size_type size() const { return _size; }
 		   bool empty() const { return _size == 0; }
+		   
+		   void print_tree()
+		   {
+			std::cout<< "life is not fair\n";
+		   }
+
+		   void printTree(node_ptr root, std::string indent, bool last) {
+			if (root != nullptr)
+			{
+				std::cout << indent;
+				if (last) {
+					std::cout << "R----";
+					indent += "     ";
+				} else {
+					std::cout << "L----";
+					indent += "|    ";
+				}
+				std::cout << root->data << std::endl;
+				printTree(root->left, indent, false);
+				printTree(root->right, indent, true);
+			}
+}
 
 				
 				
