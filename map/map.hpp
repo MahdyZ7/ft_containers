@@ -65,7 +65,7 @@ namespace ft
 			node_ptr create_node(const value_type& x)
 			{
 				node_ptr tmp = node_allocator.allocate(1);
-				// tmp->content = x;
+				tmp->content = x;
 				return tmp;
 			}
 			
@@ -109,7 +109,10 @@ namespace ft
 				++_size;
 				node_ptr new_node = create_node(val);
 				if (_root == NULL)
+				{
 					_root = new_node;
+					return ;
+				}
 				else
 				{
 					while (tmp != NULL)
@@ -139,10 +142,29 @@ namespace ft
 			// 	m_tree.insert(k, make_pair<key_type, mapped_type>(k,v));
 			// }
 
-			// void print_tree()
-			// {
-			// 	m_tree.print_tree();
-			// }
+
+			void print_tree()
+			{
+				print_helper(_root, "", true);
+			}
+
+			void print_helper(node_ptr root, std::string indent, bool last) 
+			{
+				if (root != nullptr)
+				{
+					std::cout << indent;
+					if (last) {
+						std::cout << "R----";
+						indent += "     ";
+					} else {
+						std::cout << "L----";
+						indent += "|    ";
+					}
+					std::cout << root->content.first << std::endl;
+					print_helper(root->left, indent, false);
+					print_helper(root->right, indent, true);
+				}
+			}
 
 
 
