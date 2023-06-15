@@ -65,7 +65,7 @@ namespace ft
 			node_ptr create_node(const value_type& x)
 			{
 				node_ptr tmp = node_allocator.allocate(1);
-				tmp->content = x;
+				// tmp->content = x;
 				return tmp;
 			}
 			

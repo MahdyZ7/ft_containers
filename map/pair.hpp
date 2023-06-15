@@ -2,6 +2,8 @@
 #define PAIR_HPP
 
 #include <iostream>
+#include <stdexcept>
+
 
 namespace ft
 {
@@ -19,13 +21,19 @@ namespace ft
 		pair(): first(), second(){}
 		pair(const first_type& a, const second_type& b): first(a), second(b){}
 		template< class U1, class U2 >
-		pair( const pair<U1, U2>& p ): first(p.first), second(p.second){}
+		pair( const ft::pair<U1, U2>& p ): first(p.first), second(p.second){}
 		
 		pair& operator=(const pair<T1, T2>& p){
 			if (this != &p)
 			{
 				first = p.first;
 				second = p.second;
+				// pair<T1, T2> tmp(p);
+				// std::swap(*this, tmp);
+				// std::swap(this->first, tmp.first);
+				// std::swap(this->second, tmp.second);
+				// first = std::move(p.first);
+		    	// second = std::move(p.second);
 			}
 			return (*this);
 		}
