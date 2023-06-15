@@ -28,13 +28,13 @@ namespace ft
 			{
 				// first = p.first;
 				// second = p.second;
-				// pair<T1, T2> tmp(p);
-				// std::cout<< "here\n";
+				pair<T1, T2> tmp(p);
+				std::cout<< "here\n";
 				// std::swap(*this, tmp);
 				// std::swap(this->first, tmp.first);
 				// std::swap(this->second, tmp.second);
-				// first = std::move(p.first);
-		    	// second = std::move(p.second);
+				first = std::move(p.first);
+		    	second = std::move(p.second);
 			}
 			return (*this);
 		}

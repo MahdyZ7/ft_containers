@@ -143,9 +143,18 @@ namespace ft
 			// }
 
 
+			void inorder(node_ptr root)
+			{
+				if (root != NULL)
+				{
+					inorder(root->left);
+					std::cout << root->content.first << " ";
+					inorder(root->right);
+				}
+			}
 			void print_tree()
 			{
-				print_helper(_root, "", true);
+				inorder(_root);
 			}
 
 			void print_helper(node_ptr root, std::string indent, bool last) 
