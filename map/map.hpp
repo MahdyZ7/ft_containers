@@ -4,7 +4,7 @@
 #include <iostream>
 #include <exception>
 // #include <iterator>
-# include <type_traits>
+// # include <type_traits>
 #include <map>
 #include "map_utils.hpp"
 #include "pair.hpp"
@@ -159,7 +159,7 @@ namespace ft
 
 			void print_helper(node_ptr root, std::string indent, bool last) 
 			{
-				if (root != nullptr)
+				if (root != NULL)
 				{
 					std::cout << indent;
 					if (last) {

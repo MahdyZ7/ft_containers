@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:27:31 by ayassin           #+#    #+#             */
-/*   Updated: 2023/06/14 14:53:54 by ayassin          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:24:40 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ namespace ft
 	       typedef value_type&			reference;
 	       typedef const value_type&	const_reference;
 	       typedef size_t 				size_type;
-	       typedef ptrdiff_t			difference_type;
+	    //    typedef ptrdiff_t			difference_type;
 	       typedef Alloc 				allocator_type;
 
 		   node_ptr _root;
@@ -167,22 +167,22 @@ namespace ft
 			std::cout<< "life is not fair\n";
 		   }
 
-		   void printTree(node_ptr root, std::string indent, bool last) {
-			if (root != nullptr)
-			{
-				std::cout << indent;
-				if (last) {
-					std::cout << "R----";
-					indent += "     ";
-				} else {
-					std::cout << "L----";
-					indent += "|    ";
-				}
-				std::cout << root->data << std::endl;
-				printTree(root->left, indent, false);
-				printTree(root->right, indent, true);
-			}
-}
+		//    void printTree(node_ptr root, std::string indent, bool last) {
+		// 	if (root != nullptr)
+		// 	{
+		// 		std::cout << indent;
+		// 		if (last) {
+		// 			std::cout << "R----";
+		// 			indent += "     ";
+		// 		} else {
+		// 			std::cout << "L----";
+		// 			indent += "|    ";
+		// 		}
+		// 		std::cout << root->data << std::endl;
+		// 		printTree(root->left, indent, false);
+		// 		printTree(root->right, indent, true);
+		// 	}
+		// }
 
 				
 				

@@ -6,7 +6,7 @@
 #    By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 18:00:42 by ayassin           #+#    #+#              #
-#    Updated: 2023/06/14 08:57:25 by ayassin          ###   ########.fr        #
+#    Updated: 2023/06/18 21:22:30 by ayassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = map_main.cpp
 
 CC = c++
 
-CFLAGS = -Wall -Werror -Wextra #-fsanitize=address # -std=c++98 # -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address  -std=c++98 # -fsanitize=address
 
 OBJDIR = obj
 
